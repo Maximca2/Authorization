@@ -39,7 +39,6 @@ export const userReducer = createReducer(defaultState, {
     },
     [createAccountUser]: function (state, { payload }) {
         const newUser = [...state.database, payload]
-        console.log(newUser)
         state.database.push(payload)
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newUser))
 
@@ -63,7 +62,7 @@ export const userReducer = createReducer(defaultState, {
     },
     [createNewPassword]: function (state, { payload }) {
         const { curAccount, password } = payload
-        console.log(password.newPassword)
+        
         if (!password.newPassword) {
             state.newPassword = false
             state.curUserAccount  =false
