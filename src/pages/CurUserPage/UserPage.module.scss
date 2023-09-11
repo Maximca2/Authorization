@@ -1,0 +1,68 @@
+.userOut{
+    padding: 180px 40px;
+    width: 100%;
+    background-color: rgb(153, 232, 158);
+}
+
+.userIs{
+    padding: 180px 40px;
+    width: 100%;
+    background-color: rgb(255, 231, 72);
+}
+.BtnOut{
+    text-decoration: none;
+    margin-top: 50px;
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    border: 2px solid #ff5b5b;
+    border-radius: 3px;
+    color: #fff;
+    background: #fd1158;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    padding: 12px 20px;
+    text-align: center;
+    transition-duration: 0.15s;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    :hover {
+      color: #000;
+      background: rgb(255, 218, 87);
+    }
+}
+.message{
+    font-size: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: #ff6f5f;
+}
+
+.createAccountBtn{
+    text-decoration: none;
+    margin-top: 50px;
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    border: 2px solid #000;
+    border-radius: 3px;
+    color: #fff;
+    background: #000;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    padding: 12px 20px;
+    text-align: center;
+    transition-duration: 0.15s;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    :hover {
+      color: #000;
+      background: rgb(255, 218, 87);
+    }
+}
+.userName{
+    text-align: center;
+    font-size: 40px;
+    font-family: fantasy;
+}
