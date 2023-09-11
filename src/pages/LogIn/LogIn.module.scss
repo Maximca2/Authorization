@@ -1,0 +1,145 @@
+.inputIsNotCorrect{
+  width: 360px;
+  background: #fff;
+  color: #a3a3a3;
+  font: inherit;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  border: 0;
+  outline: 0;
+  padding: 22px 18px;
+  border:1px solid red
+}
+
+.enterLogInAndPassword {
+  font-size: 35px;
+  color: bisque;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.curUserisntExist{
+  font-size: 25px;
+  color: rgb(247, 105, 58);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.box{
+  padding: 120px 40px;
+  width: 100%;
+  background-color: rgb(153, 181, 232);
+}
+
+.haventAccount{
+  color: rgb(211, 221, 239);
+}
+
+.checkBtn{
+  text-decoration: none;
+margin-top: 50px;
+display: inline-block;
+outline: 0;
+cursor: pointer;
+border: 2px solid #000;
+border-radius: 3px;
+color: #fff;
+background: #fbb830;
+font-size: 20px;
+font-weight: 600;
+line-height: 28px;
+padding: 12px 20px;
+text-align: center;
+margin-bottom: 40px;
+transition-duration: 0.15s;
+transition-property: all;
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+:hover {
+  color: #000;
+  background: rgb(255, 149, 87);
+}
+
+}
+
+.inputisCorrect{
+  width: 360px;
+  background: #fff;
+  color: #a3a3a3;
+  font: inherit;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  border: 0;
+  outline: 0;
+  padding: 22px 18px;
+}
+
+.btnLogIn{
+  text-decoration: none;
+margin-top: 50px;
+display: inline-block;
+outline: 0;
+cursor: pointer;
+border: 2px solid #5e5e5e;
+border-radius: 3px;
+color: #fff;
+background: #fbf6a3;
+font-size: 20px;
+font-weight: 600;
+line-height: 28px;
+padding: 12px 20px;
+text-align: center;
+margin-bottom: 40px;
+transition-duration: 0.15s;
+transition-property: all;
+transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+:hover {
+  color: #000;
+  background: rgb(250, 160, 108);
+}
+}
+
+.toCreateAccount{
+  text-decoration: none;
+  margin-top: 50px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border: 2px solid #f3c5c5;
+  border-radius: 3px;
+  color: #fff;
+  background: #ffd09b;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  padding: 12px 20px;
+  text-align: center;
+  transition-duration: 0.15s;
+  transition-property: all;
+  margin-right: 40px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  :hover {
+    color: #000;
+    background: rgb(250, 160, 108);
+  }
+}
+
+.toRestorePassword{
+  text-decoration: none;
+  margin-top: 50px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border: 2px solid #ff6f5f;
+  border-radius: 3px;
+  color: #fff;
+  background: #53407b5f;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  padding: 12px 20px;
+  text-align: center;
+  transition-duration: 0.15s;
+  transition-property: all;
+  margin-right: 40px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  :hover {
+    color: #000;
+    background: rgb(250, 160, 108);
+  }
+}
