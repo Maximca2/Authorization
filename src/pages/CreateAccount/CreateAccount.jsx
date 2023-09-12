@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import { isObject } from "./helper";
 
 import { createAccountUser } from "../../redux/store/usersReducer";
+
+import "react-toastify/dist/ReactToastify.css";
 
 import style from "../CreateAccount/CreateAcc.module.scss";
 
@@ -14,7 +17,19 @@ const CreateAccount = () => {
   const [dataToLogIn, setdataToLogIn] = useState({});
   const [canLogIn, setCanLogIn] = useState(false);
   const [activeInp, setActiveInp] = useState(true);
-  const [counter,setCounter] = useState(0)
+  const [counter, setCounter] = useState(0);
+
+  const showMessageError = () => {
+    toast.error("Заповніть всі поля!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  function showMessageSuccess() {
+    toast.success("Ви успішно створили акаунт", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -26,15 +41,23 @@ const CreateAccount = () => {
     if (isObject(obj)) {
       setCanLogIn(true);
       dispatch(createAccountUser(obj));
-      setCounter(counter=>counter+=1)
+      setCounter((counter) => (counter += 1));
+      showMessageSuccess()
     } else {
       setActiveInp(false);
+      if(activeInp){
+        showMessageError()
+      }
     }
   };
-
+  
   return (
     <div className={style.box}>
-      <form>
+      <ToastContainer />
+      <div className={style.textCreateAccount}>
+        <h1>Create Account</h1>
+      </div>
+      <div className={style.inpBox}>
         <input
           type="input"
           className={!activeInp ? style.active : style.inputField}
@@ -63,7 +86,7 @@ const CreateAccount = () => {
           id="nic-name"
           required
           onChange={(e) => {
-            setdataToLogIn({ ...dataToLogIn, "nicName": e.target.value });
+            setdataToLogIn({ ...dataToLogIn, nicName: e.target.value });
           }}
         />
         <input
@@ -77,17 +100,16 @@ const CreateAccount = () => {
             setdataToLogIn({ ...dataToLogIn, password: e.target.value });
           }}
         />
-      </form>
-          <div className={style.message}>
-            {activeInp ? null : "заповніть поля"}
-          </div>
-      
+      </div>
       <NavLink
-      className={style.createAccountBtn}
+        className={style.createAccountBtn}
         to={canLogIn ? "/logInPage" : "/createAccount"}
-        onClick={counter===0?() => createAccount(dataToLogIn):null}
+        onClick={counter === 0 ? () => createAccount(dataToLogIn) : null}
       >
-        {canLogIn ? "акаунт створено перейти до логіну" : "створіть акаунт "}
+        {canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "}
+      </NavLink>
+      <NavLink className={style.LogInBtn} to={"/logInPage"}>
+        Log in
       </NavLink>
     </div>
   );
