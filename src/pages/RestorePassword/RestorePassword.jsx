@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -7,38 +7,71 @@ import { ifAccountExist } from "../../redux/store/usersReducer";
 import { createNewPassword } from "../../redux/store/usersReducer";
 
 import style from "../RestorePassword/Restore.module.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RestorePassword = () => {
-
   const dispatch = useDispatch();
   const [dataToGetPassword, setDataToGetPassword] = useState({});
   const [newPassword, setNewPassword] = useState({});
-  const [canLogIn, setcanLogIn] = useState(false);
-  
+  const [exist, setExist] = useState(true);
+
+  useEffect(() => {
+    setExist(true);
+  }, [exist]);
+
   const curUserAccountExist = useSelector(
     (state) => state.toolkit.curUserAccount
   );
+  const passwordCheck = useSelector(
+    (state) => state.toolkit.curUserName
+  );
+  
   const curUser = useSelector((state) => state.toolkit.curUser);
-
   const checkIfUserHaveCuraccount = (curUserAccountObject) => {
     dispatch(ifAccountExist(curUserAccountObject));
   };
 
+  const showMessageError = () => {
+    toast.error("Заповніть всі поля!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  function showMessageSuccess() {
+    toast.success("Ви успішно поміняли пароль", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
   const getNewPassword = (newPassword, curUser) => {
     const objToCreateNewPassword = {
       curAccount: curUser,
       password: newPassword,
     };
+
+    setExist(true);
+
     if (curUser) {
-      dispatch(createNewPassword(objToCreateNewPassword));
-      setcanLogIn(true);
+        if (newPassword.newPassword) {
+          dispatch(createNewPassword(objToCreateNewPassword));
+          showMessageSuccess();
+          setExist(false);
+        }
+        else{
+          showMessageError()
+        }
+    } else {
+      setExist(true);
     }
   };
 
   function showButtontoRestorePassword(userExist) {
-    if (userExist) {
+    
+    if (userExist&& dataToGetPassword.nicName===passwordCheck) {
+  
       return (
-        <div className="">
+        <div className={style.boxToChangePassword}>
+          <ToastContainer />
           <input
             className={style.inputNewPassword}
             type="input"
@@ -58,20 +91,25 @@ const RestorePassword = () => {
           >
             Поміняти пароль
           </button>
-          {canLogIn ? <NavLink className={style.toLogIn} to="/logInPage">To log in</NavLink> : null}
+
+          {!exist ? (
+            <NavLink className={style.toLogIn} to="/logInPage">
+              To log in
+            </NavLink>
+          ) : null}
         </div>
       );
-    } else {
-      return;
     }
+
   }
   return (
     <div className={style.box}>
+      <ToastContainer />
       <div className={style.messageRestorePassword}>Відновити пароль</div>
       <input
         type="input"
         className={style.inputNicName}
-        placeholder="Name"
+        placeholder="Nic Name?"
         name="name"
         required
         onChange={(e) => {
@@ -85,8 +123,11 @@ const RestorePassword = () => {
         className={style.sendData}
         onClick={() => checkIfUserHaveCuraccount(dataToGetPassword)}
       >
-        Відправити дані!
+        Дальше
       </button>
+      <NavLink className={style.BackButton} to={"/logInPage"}>
+        Назад
+      </NavLink>
       {showButtontoRestorePassword(curUserAccountExist)}
     </div>
   );
