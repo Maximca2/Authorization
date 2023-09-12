@@ -53,3 +53,38 @@
   .message{
       font-size: 25px;
   }
+
+.LogInBtn{
+  text-decoration: none;
+  margin-top: 50px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border: 2px solid #87ff6e;
+  border-radius: 3px;
+  color: #fff;
+  margin-left: 40px;
+  background: #53335e;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  padding: 12px 20px;
+  text-align: center;
+  transition-duration: 0.15s;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  :hover {
+    color: #000;
+    background: rgb(255, 218, 87);
+  }
+}
+.textCreateAccount{
+  font-size: 25px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: #82ff5f;
+}
+.inpBox{
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+}

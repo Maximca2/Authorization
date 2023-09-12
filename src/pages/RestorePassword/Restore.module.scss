@@ -96,3 +96,28 @@
       background: rgb(255, 218, 87);
     }
 }
+.BackButton{
+  text-decoration: none;
+  margin-top: 50px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border: 2px solid #ffe3e3;
+  border-radius: 3px;
+  color: #fff;
+  background: #e7c174;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  padding: 12px 20px;
+  text-align: center;
+  transition-duration: 0.15s;
+  margin-bottom: 40px;
+  margin-left: 40px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  :hover {
+    color: #000;
+    background: rgb(243, 62, 38);
+  }
+}
