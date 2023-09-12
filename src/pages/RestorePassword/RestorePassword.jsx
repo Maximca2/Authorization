@@ -128,6 +128,9 @@ const RestorePassword = () => {
       <NavLink className={style.BackButton} to={"/logInPage"}>
         Назад
       </NavLink>
+      <NavLink className={style.LogInBtn} to={"/logInPage"}>
+        Log in
+      </NavLink>
       {showButtontoRestorePassword(curUserAccountExist)}
     </div>
   );
