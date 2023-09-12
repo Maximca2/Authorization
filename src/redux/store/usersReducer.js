@@ -1,6 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD } from './actions';
+import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD ,CHECK_IF_USER_OUT } from './actions';
 
 const LOCAL_STORAGE_KEY = 'OUR_STORAGE_ITEMS'
 
@@ -10,8 +10,11 @@ const defaultState = {
     curUser: null,
     curUserAccount: false,
     database: localStorage.getItem(LOCAL_STORAGE_KEY) ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) : [],
-    userExist: true,
-    newPassword: true
+    userExist: false,
+    newPassword: true,
+    userIsOut:false,
+    curUserName:null,
+    userInAccount:false
 
 }
 // actions
@@ -19,6 +22,9 @@ export const checkUser = createAction(CHECK_USER);
 export const createAccountUser = createAction(CREATE_ACCOUNT)
 export const ifAccountExist = createAction(RESTORE_PASSWORD)
 export const createNewPassword = createAction(CREATE_NEW_PASSWORD)
+export const checkIfUserIsOut = createAction(CHECK_IF_USER_OUT)
+
+
 //Reducer 
 export const userReducer = createReducer(defaultState, {
 
@@ -26,16 +32,19 @@ export const userReducer = createReducer(defaultState, {
 
         const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY)
         const userInfoParsed = JSON.parse(userInfo)
-        const data = userInfoParsed.find(it => it.nicName === payload.nicName && it.password === payload.password);
+        if(!userInfoParsed){
+            state.userExist = false
+           return 
+        }
+        const data = userInfoParsed.find(it => it?.nicName === payload?.nicName && it?.password === payload?.password);
         if (data) {
             state.user = data
+            state.userInAccount = true
             state.userExist = true
         } else {
             state.userExist = false
+            
         }
-
-
-
     },
     [createAccountUser]: function (state, { payload }) {
         const newUser = [...state.database, payload]
@@ -44,7 +53,7 @@ export const userReducer = createReducer(defaultState, {
 
     },
     [ifAccountExist]: function (state, { payload }) {
-
+        
         const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY)
         const userInfoParsed = JSON.parse(userInfo)
         const data = userInfoParsed.find(it => it.nicName === payload.nicName);
@@ -52,11 +61,11 @@ export const userReducer = createReducer(defaultState, {
         if (!data) {
             state.curUserAccount = false
 
-
         } else {
+            
             state.curUserAccount = true
             state.curUser = data;
-
+            state.curUserName = payload.nicName
         }
 
     },
@@ -70,6 +79,7 @@ export const userReducer = createReducer(defaultState, {
             
 
         } else {
+            
             state.curUserAccount  =true
             const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY)
             const userInfoParsed = JSON.parse(userInfo)
@@ -82,7 +92,15 @@ export const userReducer = createReducer(defaultState, {
 
         }
 
+    },
 
+    [checkIfUserIsOut]: function (state, { payload }) {
+        if(payload===false){
+            state.userExist = false;
+            state.userIsOut = true  
+            state.userInAccount = true  
+            
+        }
 
     },
 
