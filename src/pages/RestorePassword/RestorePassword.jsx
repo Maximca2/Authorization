@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import { ifAccountExist } from "../../redux/store/usersReducer";
-
 import { createNewPassword } from "../../redux/store/usersReducer";
 
-import style from "../RestorePassword/Restore.module.scss";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import style from "../RestorePassword/Restore.module.scss";
+
 const RestorePassword = () => {
+  
   const dispatch = useDispatch();
   const [dataToGetPassword, setDataToGetPassword] = useState({});
   const [newPassword, setNewPassword] = useState({});
   const [exist, setExist] = useState(true);
-
-  useEffect(() => {
-    setExist(true);
-  }, [exist]);
+  const [redirectNow, setRedirectNow] = useState(false);
 
   const curUserAccountExist = useSelector(
     (state) => state.toolkit.curUserAccount
   );
-  const passwordCheck = useSelector(
-    (state) => state.toolkit.curUserName
-  );
-  
+
+  const passwordCheck = useSelector((state) => state.toolkit.curUserName);
+
   const curUser = useSelector((state) => state.toolkit.curUser);
   const checkIfUserHaveCuraccount = (curUserAccountObject) => {
     dispatch(ifAccountExist(curUserAccountObject));
@@ -48,27 +45,25 @@ const RestorePassword = () => {
       curAccount: curUser,
       password: newPassword,
     };
-
     setExist(true);
 
-    if (curUser) {
-        if (newPassword.newPassword) {
-          dispatch(createNewPassword(objToCreateNewPassword));
-          showMessageSuccess();
-          setExist(false);
-        }
-        else{
-          showMessageError()
-        }
+    if (newPassword.newPassword) {
+      dispatch(createNewPassword(objToCreateNewPassword));
+      showMessageSuccess();
+      setExist(false);
+      setTimeout(() => {
+        setRedirectNow(true);
+      }, 2000);
     } else {
-      setExist(true);
+      showMessageError();
     }
   };
+  useEffect(() => {
+    setExist(true);
+  }, [exist]);
 
   function showButtontoRestorePassword(userExist) {
-    
-    if (userExist&& dataToGetPassword.nicName===passwordCheck) {
-  
+    if (userExist && dataToGetPassword.nicName === passwordCheck) {
       return (
         <div className={style.boxToChangePassword}>
           <ToastContainer />
@@ -91,16 +86,10 @@ const RestorePassword = () => {
           >
             Поміняти пароль
           </button>
-
-          {!exist ? (
-            <NavLink className={style.toLogIn} to="/logInPage">
-              To log in
-            </NavLink>
-          ) : null}
+          {redirectNow ? <Navigate replace to="/logInPage" /> : null}
         </div>
       );
     }
-
   }
   return (
     <div className={style.box}>
@@ -126,10 +115,7 @@ const RestorePassword = () => {
         Дальше
       </button>
       <NavLink className={style.BackButton} to={"/logInPage"}>
-        Назад
-      </NavLink>
-      <NavLink className={style.LogInBtn} to={"/logInPage"}>
-        Log in
+        Назад до Log in
       </NavLink>
       {showButtontoRestorePassword(curUserAccountExist)}
     </div>
