@@ -1,29 +1,36 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { checkIfUserIsOut } from "../../redux/store/usersReducer";
 
 import style from "../CurUserPage/UserPage.module.scss";
 
 const UserPage = () => {
-
-  const dispatch  =useDispatch();
-  const { name } = useParams();
+  
+  const dispatch = useDispatch();
   const [userOut, setuserOut] = useState(true);
-  const [userInPage, setuserInPage] = useState(true);
-
+  const [userInPage, setUserInPage] = useState(true);
+  const user = useSelector((state) => state.toolkit.user);
+  
   function setToDeffault() {
-    setuserInPage(false);
     setuserOut(false);
-    userIsOut(false)
+    userIsOut(false);
   }
-  function userIsOut(value){
-    dispatch(checkIfUserIsOut(value))
+  function userIsOut(value) {
+    dispatch(checkIfUserIsOut(value));
   }
+  useEffect(() => {
+    if (localStorage.getItem("CUR_USER_TOKEN") === "[]") {
+      setUserInPage(false);
+      console.log("Local storage is empty");
+    } else {
+      setUserInPage(true);
+      console.log("Local storage isnt empty");
+    }
+  }, [userInPage]);
 
-  if ((!userInPage && !userOut) || name === 1) {
+  if (!userOut) {
     return (
       <div className={style.userOut}>
         <div className={style.message}>Ви не залогінені</div>
@@ -37,10 +44,11 @@ const UserPage = () => {
       </div>
     );
   }
+
   if (userInPage) {
     return (
       <div className={style.userIs}>
-        <div className={style.userName}>Привіт {name}</div>
+        <div className={style.userName}>Привіт {user?.name}</div>
         <div>
           <button className={style.BtnOut} onClick={() => setToDeffault()}>
             Вийти з акаунту
