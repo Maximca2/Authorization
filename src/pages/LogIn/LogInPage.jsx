@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 import { checkUser } from "../../redux/store/usersReducer";
@@ -14,18 +14,11 @@ const LogInPage = () => {
   const [dataToLogIn, setdataToLogIn] = useState({});
   const [canGoToUSerPage, setcanGoToUSerPage] = useState(true);
   const [wrongValue, setWrongValue] = useState(true);
+  const [redirectNow, setRedirectNow] = useState(false);
 
   const userExist = useSelector((state) => state.toolkit.userExist);
   const database = useSelector((state) => state.toolkit.database);
-  const user = useSelector((state) => state.toolkit.user);
 
-  useEffect(() => {
-    if (userExist) {
-      setWrongValue(true);
-      showMessageSuccess();
-      setcanGoToUSerPage(true);
-    }
-  }, [userExist]);
   const showMessageError = () => {
     toast.error("Такого акаунту немає!", {
       position: toast.POSITION.TOP_RIGHT,
@@ -51,6 +44,16 @@ const LogInPage = () => {
       setcanGoToUSerPage(true);
     }
   }
+
+  useEffect(() => {
+    if (userExist) {
+      setWrongValue(true);
+      showMessageSuccess();
+      setcanGoToUSerPage(true);
+      setTimeout(() => setRedirectNow(true), 2000);
+    }
+  }, [userExist]);
+
   return (
     <div className={style.box}>
       <div className={style.textLogIn}>
@@ -86,19 +89,14 @@ const LogInPage = () => {
         </form>
       </div>
       <div className={style.boxForBtn}>
-        <NavLink
+        <button
           onClick={() => checkIfAccountExist(dataToLogIn, database)}
           className={style.btnLogIn}
-          to={
-            !userExist
-              ? "/"
-              : `/userpage/${user?.name === undefined ? 1 : user?.name}`
-          }
         >
-          {!userExist ? "провірка акаунту" : "Log in"}
-        </NavLink>
+          Log in
+        </button>
       </div>
-
+      {redirectNow ? <Navigate replace to={`/`} /> : null}
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
         <NavLink className={style.toCreateAccount} to="/createAccount">
