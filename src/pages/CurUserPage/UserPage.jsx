@@ -23,10 +23,10 @@ const UserPage = () => {
   useEffect(() => {
     if (localStorage.getItem("CUR_USER_TOKEN") === "[]") {
       setUserInPage(false);
-      console.log("Local storage is empty");
+      
     } else {
       setUserInPage(true);
-      console.log("Local storage isnt empty");
+      
     }
   }, [userInPage]);
 
