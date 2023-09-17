@@ -7,12 +7,11 @@ import { checkIfUserIsOut } from "../../redux/store/usersReducer";
 import style from "../CurUserPage/UserPage.module.scss";
 
 const UserPage = () => {
-  
   const dispatch = useDispatch();
   const [userOut, setuserOut] = useState(true);
   const [userInPage, setUserInPage] = useState(true);
   const user = useSelector((state) => state.toolkit.user);
-  
+
   function setToDeffault() {
     setuserOut(false);
     userIsOut(false);
@@ -23,10 +22,8 @@ const UserPage = () => {
   useEffect(() => {
     if (localStorage.getItem("CUR_USER_TOKEN") === "[]") {
       setUserInPage(false);
-      
     } else {
       setUserInPage(true);
-      
     }
   }, [userInPage]);
 

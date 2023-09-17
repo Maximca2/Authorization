@@ -32,9 +32,9 @@ function App() {
         <Route path="/" element={userInPage?<UserPage />: <MainPage />} />
         <Route path="*" element={userInPage?<UserPage />: <MainPage />} />
         <Route path="/" element={<UserPage />} />
-        <Route path="/logInPage" element={<LogInPage />} />
-        <Route path="/createAccount" element={<CreateAccount />} />
-        <Route path="/restorePassword" element={<RestorePassword />} />
+        <Route path="/logInPage" element={userInPage?<UserPage/>:<LogInPage />}/>
+        <Route path="/createAccount" element={userInPage?<UserPage/>:<CreateAccount />} />
+        <Route path="/restorePassword" element={userInPage?<UserPage/>:<RestorePassword />} />
       </Routes>
     </div>
   );
