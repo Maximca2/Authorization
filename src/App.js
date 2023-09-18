@@ -1,40 +1,27 @@
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import LogInPage from './pages/LogIn/LogInPage';
 import UserPage from './pages/CurUserPage/UserPage';
-import MainPage from './pages/MainPage/MainPage';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
-
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import Private from './pages/Private/PrivateRoute';
 
 import './App.css';
 
 function App() {
-  const userInAccount = useSelector((state) => state.toolkit.userInAccount);
-  const [userInPage,setUserInPage] = useState(true)
-  
-  useEffect(()=>{
-    if (localStorage.getItem('CUR_USER_TOKEN') === '[]') {
-      setUserInPage(false)
-  }else{
-    setTimeout(()=>{
-      setUserInPage(true)
-    },2000)
-      
-  }
-  },[userInAccount])
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={userInPage?<UserPage />: <MainPage />} />
-        <Route path="*" element={userInPage?<UserPage />: <MainPage />} />
-        <Route path="/" element={<UserPage />} />
-        <Route path="/logInPage" element={userInPage?<UserPage/>:<LogInPage />}/>
-        <Route path="/createAccount" element={userInPage?<UserPage/>:<CreateAccount />} />
-        <Route path="/restorePassword" element={userInPage?<UserPage/>:<RestorePassword />} />
+        <Route path="/" element={
+          <Private>
+            <UserPage />
+          </Private>
+        } />
+        <Route path="/logIn" element={localStorage.getItem('CUR_USER_TOKEN')=== '[]' ? <LogInPage />:<Navigate to="/" />} />
+        <Route path="/createAccount" element={localStorage.getItem('CUR_USER_TOKEN') === '[]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <CreateAccount />:<Navigate to="/" />} />
+        <Route path="/restorePassword" element={localStorage.getItem('CUR_USER_TOKEN') === '[]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <RestorePassword />:<Navigate to="/" />} />
+        <Route path="*" element={localStorage.getItem('CUR_USER_TOKEN') === '[]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <LogInPage />:<Navigate to="/" />} />
       </Routes>
     </div>
   );
