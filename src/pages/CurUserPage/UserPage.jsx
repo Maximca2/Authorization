@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { checkIfUserIsOut } from "../../redux/store/usersReducer";
@@ -13,7 +13,11 @@ const UserPage = () => {
   const user = useSelector((state) => state.toolkit.user);
 
   function setToDeffault() {
-    setuserOut(false);
+    setTimeout(()=>{
+      setuserOut(false);
+    },2000)
+    
+    
     userIsOut(false);
   }
   function userIsOut(value) {
@@ -34,15 +38,16 @@ const UserPage = () => {
         <NavLink
           className={style.createAccountBtn}
           onClick={() => setToDeffault()}
-          to="/logInPage"
         >
           Log in
         </NavLink>
+        <Navigate replace to='/logIn'/>
       </div>
     );
   }
 
   if (userInPage) {
+     
     return (
       <div className={style.userIs}>
         <div className={style.userName}>Привіт {user?.name}</div>
