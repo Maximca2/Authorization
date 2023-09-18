@@ -4,14 +4,14 @@ import UserPage from "../CurUserPage/UserPage";
 
 const Private = ()=>{
     const authen = localStorage.getItem('CUR_USER_TOKEN');
-
-    if(authen === null ){
+    if(authen===null){
         return <MainPage/>
     }
-    if(authen ==='[]'){
+
+    if(authen === '[2]'){
         return <LogInPage/>
     }
-    if(authen.length>0){
+    if(authen?.length>0){
        return <UserPage/>
     }
 

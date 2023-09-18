@@ -14,8 +14,7 @@ const MainPage = () => {
     <div className={style.boxFor}>
       <div className={style.boxbtnHi}>
         <div className={style.messageHi}>Вітаю!</div>
-        
-        <NavLink to='/logIn' onClick={setLog()}  className={style.btnHi}>Увійти</NavLink>
+        <NavLink to='/logIn' onClick={setLog}  className={style.btnHi}>Увійти</NavLink>
       </div>
     </div>
   );

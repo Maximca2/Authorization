@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { checkIfUserIsOut } from "../../redux/store/usersReducer";
@@ -38,10 +38,10 @@ const UserPage = () => {
         <NavLink
           className={style.createAccountBtn}
           onClick={() => setToDeffault()}
+          to='/logIn'
         >
           Log in
         </NavLink>
-        <Navigate replace to='/logIn'/>
       </div>
     );
   }
