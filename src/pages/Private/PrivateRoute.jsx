@@ -4,7 +4,6 @@ import UserPage from "../CurUserPage/UserPage";
 
 const Private = ()=>{
     const authen = localStorage.getItem('CUR_USER_TOKEN');
-    const auth = localStorage.getItem('CUR_USER_TOKEN')?.length;
 
     if(authen === null ){
         return <MainPage/>
@@ -12,7 +11,7 @@ const Private = ()=>{
     if(authen ==='[]'){
         return <LogInPage/>
     }
-    if(authen.length===auth){
+    if(authen.length>0){
        return <UserPage/>
     }
 
