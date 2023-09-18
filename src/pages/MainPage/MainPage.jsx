@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import style from "../MainPage/mainPage.module.scss";
 import { NavLink } from "react-router-dom";
 import { setLogIn } from "../../redux/store/usersReducer";
