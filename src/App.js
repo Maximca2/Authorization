@@ -18,7 +18,7 @@ function App() {
             <UserPage />
           </Private>
         } />
-        <Route path="/logIn" element={localStorage.getItem('CUR_USER_TOKEN')=== '[]' ? <LogInPage />:<Navigate to="/" />} />
+        <Route path="/logIn" element={localStorage.getItem('CUR_USER_TOKEN') !== '[]' ? <LogInPage />:<Navigate to="/" />} />
         <Route path="/createAccount" element={localStorage.getItem('CUR_USER_TOKEN') === '[]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <CreateAccount />:<Navigate to="/" />} />
         <Route path="/restorePassword" element={localStorage.getItem('CUR_USER_TOKEN') === '[]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <RestorePassword />:<Navigate to="/" />} />
         <Route path="*" element={localStorage.getItem('CUR_USER_TOKEN') === '[]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <LogInPage />:<Navigate to="/" />} />
