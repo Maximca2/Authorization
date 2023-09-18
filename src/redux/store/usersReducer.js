@@ -1,6 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD, CHECK_IF_USER_OUT, CHECK_IF_USER_IN } from './actions';
+import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD, CHECK_IF_USER_OUT, CHECK_IF_USER_IN,SET_LOG_IN } from './actions';
 
 const LOCAL_STORAGE_KEY = 'OUR_STORAGE_ITEMS';
 const CUR_USER_TOKE = 'CUR_USER_TOKEN';
@@ -27,7 +27,7 @@ export const ifAccountExist = createAction(RESTORE_PASSWORD)
 export const createNewPassword = createAction(CREATE_NEW_PASSWORD)
 export const checkIfUserIsOut = createAction(CHECK_IF_USER_OUT)
 export const checkIfUserIn = createAction(CHECK_IF_USER_IN)
-
+export const setLogIn = createAction(SET_LOG_IN)
 
 //Reducer 
 export const userReducer = createReducer(defaultState, {
@@ -50,7 +50,7 @@ export const userReducer = createReducer(defaultState, {
             state.user = data
             state.userExist = true
             const userToken = data?.token;
-            localStorage.setItem(CUR_USER_TOKE, JSON.stringify(userToken));
+            localStorage.setItem(CUR_USER_TOKE, JSON.stringify([userToken]));
         }else{
             state.userExist = false
         }
@@ -74,10 +74,18 @@ export const userReducer = createReducer(defaultState, {
 
     },
     [ifAccountExist]: function (state, { payload }) {
+        if (!payload.nicName) {
+            return
+        }
 
         const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY)
         const userInfoParsed = JSON.parse(userInfo)
+        if(!userInfoParsed){
+            return 
+        }
         const data = userInfoParsed.find(it => it.nicName === payload.nicName);
+
+        
 
         if (!data) {
             state.curUserAccount = false
@@ -116,6 +124,12 @@ export const userReducer = createReducer(defaultState, {
         if (payload) {
             state.userInAccount = true
         }
+    },
+    [setLogIn]: function (state, { payload }) {
+        
+        const userOut = []
+        localStorage.setItem(CUR_USER_TOKE, JSON.stringify(userOut))
+        
     },
 
     [checkIfUserIsOut]: function (state, { payload }) {
