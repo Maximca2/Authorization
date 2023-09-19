@@ -9,21 +9,26 @@ import "react-toastify/dist/ReactToastify.css";
 
 import style from "../LogIn/LogIn.module.scss";
 
+const showMessageError = () => {
+  toast.error("Такого акаунту немає!", {
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
+
+export function checkIfAccountIs(value){
+  if(!value){
+    showMessageError()
+  }
+}
+
 const LogInPage = () => {
   const dispatch = useDispatch();
   const [dataToLogIn, setdataToLogIn] = useState({});
-  const [canGoToUSerPage, setcanGoToUSerPage] = useState(true);
   const [wrongValue, setWrongValue] = useState(true);
   const [redirectNow, setRedirectNow] = useState(false);
 
   const userExist = useSelector((state) => state.toolkit.userExist);
   const database = useSelector((state) => state.toolkit.database);
-
-  const showMessageError = () => {
-    toast.error("Такого акаунту немає!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
 
   function showMessageSuccess() {
     toast.success("Ви успішно пройшли ідентифікацію!", {
@@ -36,22 +41,19 @@ const LogInPage = () => {
       dispatch(checkUser(obj));
     }
 
-    setcanGoToUSerPage(false);
+    
     setWrongValue(false);
-
-    if (!canGoToUSerPage) {
-      showMessageError();
-      setcanGoToUSerPage(true);
-    }
   }
 
   useEffect(() => {
+
+   
     if (userExist) {
       setWrongValue(true);
       showMessageSuccess();
-      setcanGoToUSerPage(true);
       setTimeout(() => setRedirectNow(true), 2000);
     }
+    
   }, [userExist]);
 
   return (
