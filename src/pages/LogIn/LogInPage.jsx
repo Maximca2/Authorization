@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+
+import Button from "../../Komponents/ButtonCollection/Button";
+import Tittle from "../../Komponents/TittleColection/Tittle";
 
 import { checkUser } from "../../redux/store/usersReducer";
 
@@ -15,9 +18,9 @@ const showMessageError = () => {
   });
 };
 
-export function checkIfAccountIs(value){
-  if(!value){
-    showMessageError()
+export function checkIfAccountIs(value) {
+  if (!value) {
+    showMessageError();
   }
 }
 
@@ -41,26 +44,20 @@ const LogInPage = () => {
       dispatch(checkUser(obj));
     }
 
-    
     setWrongValue(false);
   }
 
   useEffect(() => {
-
-   
     if (userExist) {
       setWrongValue(true);
       showMessageSuccess();
       setTimeout(() => setRedirectNow(true), 2000);
     }
-    
   }, [userExist]);
 
   return (
     <div className={style.box}>
-      <div className={style.textLogIn}>
-        <h1>Log in</h1>
-      </div>
+      <Tittle style={style.LogIn} value={"Log in"} />
       <ToastContainer />
       <div className={style.boxForInp}>
         <form className={style.form}>
@@ -101,12 +98,16 @@ const LogInPage = () => {
       {redirectNow ? <Navigate replace to={`/`} /> : null}
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
-        <NavLink className={style.toCreateAccount} to="/createAccount">
-          Створити акаунт
-        </NavLink>
-        <NavLink className={style.toRestorePassword} to="/restorePassword">
-          Забули пароль?
-        </NavLink>
+        <Button
+          color={style.restorePs}
+          value={"Створити акаунт?"}
+          to="/createAccount"
+        />
+        <Button
+          color={style.createAc}
+          value={"Забули пароль?"}
+          to="/restorePassword"
+        />
       </div>
     </div>
   );
