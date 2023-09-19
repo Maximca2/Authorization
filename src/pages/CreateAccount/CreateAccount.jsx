@@ -48,9 +48,8 @@ const CreateAccount = () => {
       showMessageSuccess();
     }else{
       setActiveInp(false);
-      if (activeInp) {
-        showMessageError();
-      }
+      showMessageError();
+      
     } 
       
   };
