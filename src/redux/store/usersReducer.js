@@ -121,14 +121,11 @@ export const userReducer = createReducer(defaultState, {
     },
     [checkIfUserIsOut]: function (state) {
         
-            const userOut = []
+            const userOut = ''
             state.userInAccount = false
             localStorage.setItem(CUR_USER_TOKEN, JSON.stringify(userOut))
             state.userExist = false;
             state.userInAccount = true
-
-
-        
 
     },
 
