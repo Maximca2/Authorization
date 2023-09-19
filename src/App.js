@@ -21,9 +21,9 @@ function App() {
         <Route element={<Private />}>
           <Route path='/' element={<UserPage />} />
         </Route>
-        <Route path='/logInPage' element={token === '' || token === null || userInAccount ? <LogInPage /> : <Navigate to='/' />} />
-        <Route path='/createAccount' element={token === '' || token === null ? <CreateAccount /> : <Navigate to='/' />} />
-        <Route path='/restorePassword' element={token === '' || token === null ? <RestorePassword /> : <Navigate to='/' />} />
+        <Route path='/logInPage' element={token === '' || token === null || !userInAccount ? <LogInPage /> : <Navigate to='/' />} />
+        <Route path='/createAccount' element={token === '' || token === null || !userInAccount ? <CreateAccount /> : <Navigate to='/' />} />
+        <Route path='/restorePassword' element={token === '' || token === null || !userInAccount ? <RestorePassword /> : <Navigate to='/' />} />
       </Routes>
     </div>
   );
