@@ -2,26 +2,25 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import LogInPage from './pages/LogIn/LogInPage';
-import UserPage from './pages/CurUserPage/UserPage';
+import UserPage from './pages/InfoPage/InfoPage';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
-import Private from './pages/Private/PrivateRoute';
-
+import Private from './Private/Routes/PrivateRoute';
 import './App.css';
+import { useSelector } from "react-redux";
 
 function App() {
+  const token = localStorage.getItem('CUR_USER_TOKEN');
+  const userInAccount = useSelector((state) => state.toolkit.userInAccount);
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={
-          <Private>
-            <UserPage />
-          </Private>
-        } />
-        <Route path="/logIn" element={localStorage.getItem('CUR_USER_TOKEN') !== '[]' ? <LogInPage />:<Navigate to="/" />} />
-        <Route path="/createAccount" element={localStorage.getItem('CUR_USER_TOKEN') === '[1]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <CreateAccount />:<Navigate to="/" />} />
-        <Route path="/restorePassword" element={localStorage.getItem('CUR_USER_TOKEN') === '[1]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <RestorePassword />:<Navigate to="/" />} />
-        <Route path="*" element={localStorage.getItem('CUR_USER_TOKEN') === '[]'||localStorage.getItem('CUR_USER_TOKEN') === null ? <LogInPage />:<Navigate to="/" />} />
+        <Route element={<Private />}>
+          <Route path='/' element={<UserPage />} />
+        </Route>
+        <Route path='/logInPage' element={token === '[]' || token === null || userInAccount ? <LogInPage /> : <Navigate to='/' />} />
+        <Route path='/createAccount' element={token === '[]' || token === null ? <CreateAccount /> : <Navigate to='/' />} />
+        <Route path='/restorePassword' element={token === '[]' || token === null ? <RestorePassword /> : <Navigate to='/' />} />
       </Routes>
     </div>
   );
