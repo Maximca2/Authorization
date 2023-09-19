@@ -1,4 +1,4 @@
-.inputIsNotCorrect{
+.inputIsNotCorrect {
   width: 360px;
   background: #fff;
   color: #a3a3a3;
@@ -7,22 +7,22 @@
   border: 0;
   outline: 0;
   padding: 22px 18px;
-  border:1px solid red
+  border: 1px solid red;
 }
 
 .enterLogInAndPassword {
   font-size: 35px;
   color: bisque;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.curUserisntExist{
+.curUserisntExist {
   font-size: 25px;
   color: rgb(247, 105, 58);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.box{
+.box {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -31,37 +31,11 @@
   background-color: rgb(153, 181, 232);
 }
 
-.haventAccount{
+.haventAccount {
   color: rgb(211, 221, 239);
 }
 
-.checkBtn{
-  text-decoration: none;
-margin-top: 50px;
-display: inline-block;
-outline: 0;
-cursor: pointer;
-border: 2px solid #000;
-border-radius: 3px;
-color: #472222c1;
-background: #fbb830;
-font-size: 20px;
-font-weight: 600;
-line-height: 28px;
-padding: 12px 20px;
-text-align: center;
-margin-bottom: 40px;
-transition-duration: 0.15s;
-transition-property: all;
-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-:hover {
-  color: #000;
-  background: rgb(255, 149, 87);
-}
-
-}
-
-.inputisCorrect{
+.inputisCorrect {
   width: 360px;
   background: #fff;
   color: #a3a3a3;
@@ -72,92 +46,70 @@ transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   padding: 22px 18px;
 }
 
-.btnLogIn{
-  text-decoration: none;
-margin-top: 50px;
-display: inline-block;
-outline: 0;
-cursor: pointer;
-border: 2px solid #5e5e5e;
-border-radius: 3px;
-color: #3f0c15;
-background: #fbf6a3;
-font-size: 20px;
-font-weight: 600;
-line-height: 28px;
-padding: 12px 20px;
-text-align: center;
-margin-bottom: 40px;
-transition-duration: 0.15s;
-transition-property: all;
-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-:hover {
-  color: #000;
-  background: rgb(250, 160, 108);
-}
-}
-
-.toCreateAccount{
+.btnLogIn {
   text-decoration: none;
   margin-top: 50px;
   display: inline-block;
   outline: 0;
   cursor: pointer;
-  border: 2px solid #f3c5c5;
+  border: 2px solid #5e5e5e;
   border-radius: 3px;
-  color: #2c1d1d;
-  background: #ffd09b;
+  color: #3f0c15;
+  background: #fbf6a3;
   font-size: 20px;
   font-weight: 600;
   line-height: 28px;
   padding: 12px 20px;
   text-align: center;
+  margin-bottom: 40px;
   transition-duration: 0.15s;
   transition-property: all;
-  margin-right: 40px;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   :hover {
     color: #000;
     background: rgb(250, 160, 108);
   }
 }
-
-.toRestorePassword{
-  text-decoration: none;
-  margin-top: 50px;
-  display: inline-block;
-  outline: 0;
-  cursor: pointer;
-  border: 2px solid #ff6f5f;
-  border-radius: 3px;
-  color: #fff;
-  background: #53407b5f;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 28px;
-  padding: 12px 20px;
-  text-align: center;
-  transition-duration: 0.15s;
-  transition-property: all;
-  margin-right: 40px;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  :hover {
-    color: #000;
-    background: rgb(250, 160, 108);
-  }
-}
-.form{
-
+.form {
   display: flex;
   gap: 40px;
-  flex-direction:column
+  flex-direction: column;
 }
-.boxForInp{
+.boxForInp {
   display: flex;
   justify-content: center;
 }
-.textLogIn{
-  font-size: 25px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+button {
+  text-decoration: none;
+  margin-top: 50px;
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  padding: 12px 20px;
+  text-align: center;
+  transition-duration: 0.15s;
+  transition-property: all;
+  margin-right: 40px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.LogIn{
+  font-size: 35px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   color: #ff6f5f;
+}
+
+.restorePs {
+  border: 2px solid #ff6f5f;
+  background: #53407b5f;
+  color: #2c1d1d;
+}
+.createAc {
+  border: 2px solid #f3c5c5;
+  background: #ffd09b;
 }
