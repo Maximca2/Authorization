@@ -94,7 +94,7 @@ const RestorePassword = () => {
   return (
     <div className={style.box}>
       <ToastContainer />
-      <div className={style.messageRestorePassword}>Відновити пароль</div>
+      <div className={style.messageRestorePassword}>Відновити пароль</div>     
       <input
         type="input"
         className={style.inputNicName}
