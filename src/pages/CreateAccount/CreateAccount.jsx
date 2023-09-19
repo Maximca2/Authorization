@@ -8,13 +8,13 @@ import { v4 as uuidv4 } from "uuid";
 import { isObject } from "./helper";
 
 import { createAccountUser } from "../../redux/store/usersReducer";
+import Tittle from "../../Komponents/TittleColection/Tittle";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import style from "../CreateAccount/CreateAcc.module.scss";
 
 const CreateAccount = () => {
-
   const dispatch = useDispatch();
   const [dataToLogIn, setdataToLogIn] = useState({});
   const [canLogIn, setCanLogIn] = useState(false);
@@ -40,20 +40,18 @@ const CreateAccount = () => {
         token: uniquToken,
         curAccountData: obj,
       };
-      setTimeout(()=>{
-         setCanLogIn(true);
-      },2000)
+      setTimeout(() => {
+        setCanLogIn(true);
+      }, 2000);
       dispatch(createAccountUser(objUniqueToken));
       setCounter((counter) => (counter += 1));
       showMessageSuccess();
-    }else{
+    } else {
       setActiveInp(false);
       showMessageError();
-      
-    } 
-      
+    }
   };
-  
+
   useEffect(() => {
     setTimeout(() => {
       setActiveInp(true);
@@ -63,9 +61,7 @@ const CreateAccount = () => {
   return (
     <div className={style.box}>
       <ToastContainer />
-      <div className={style.textCreateAccount}>
-        <h1>Create Account</h1>
-      </div>
+      <Tittle style={style.createAcc} value={"Create Account"} />
       <div className={style.inpBox}>
         <input
           type="input"
@@ -116,7 +112,8 @@ const CreateAccount = () => {
       >
         {canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "}
       </button>
-      {canLogIn?<Navigate replace to='/logInPage' />:null}
+      {canLogIn ? <Navigate replace to="/logInPage" /> : null}
+
       <NavLink className={style.LogInBtn} to={"/logInPage"}>
         Log in
       </NavLink>
