@@ -1,9 +1,9 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
 import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD, CHECK_IF_USER_OUT, CHECK_IF_USER_IN,SET_LOG_IN } from './actions';
-
+import { checkIfAccountIs } from "../../pages/LogIn/LogInPage";
 const LOCAL_STORAGE_KEY = 'OUR_STORAGE_ITEMS';
-const CUR_USER_TOKE = 'CUR_USER_TOKEN';
+export const CUR_USER_TOKEN = 'CUR_USER_TOKEN';
 
 // DefaultState
 const defaultState = {
@@ -11,7 +11,7 @@ const defaultState = {
     curUser: null,
     curUserAccount: false,
     database: localStorage.getItem(LOCAL_STORAGE_KEY) ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) : [],
-    curUserToken: localStorage.getItem(CUR_USER_TOKE) ? JSON.parse(localStorage.getItem(CUR_USER_TOKE)) : [],
+    curUserToken: localStorage.getItem(CUR_USER_TOKEN),
     userExist: false,
     newPassword: false,
     userIsOut: false,
@@ -36,7 +36,8 @@ export const userReducer = createReducer(defaultState, {
 
 
         if (!payload.nicName) {
-            return
+
+            return 
         }
         const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY)
         const userInfoParsed = JSON.parse(userInfo)
@@ -47,22 +48,18 @@ export const userReducer = createReducer(defaultState, {
         }
         const data = userInfoParsed.find(it => it?.nicName === payload?.nicName && it?.password === payload?.password);
         if (data) {
+            
             state.user = data
             state.userExist = true
             const userToken = data?.token;
-            localStorage.setItem(CUR_USER_TOKE, JSON.stringify([userToken]));
+            localStorage.setItem(CUR_USER_TOKEN, JSON.stringify(userToken));
+            state.userInAccount = true
         }else{
+            let ise = false;
+            checkIfAccountIs(ise)
+
             state.userExist = false
         }
-
-
-        if (localStorage.getItem(CUR_USER_TOKE) === '[]') {
-            state.userInAccount = false;
-        } else {
-
-            state.userInAccount = true;
-        }
-
     },
     [createAccountUser]: function (state, { payload }) {
 
@@ -84,9 +81,6 @@ export const userReducer = createReducer(defaultState, {
             return 
         }
         const data = userInfoParsed.find(it => it.nicName === payload.nicName);
-
-        
-
         if (!data) {
             state.curUserAccount = false
 
@@ -125,22 +119,16 @@ export const userReducer = createReducer(defaultState, {
             state.userInAccount = true
         }
     },
-    [setLogIn]: function (state, { payload }) {
+    [checkIfUserIsOut]: function (state) {
         
-        const userOut = [1]
-        localStorage.setItem(CUR_USER_TOKE, JSON.stringify(userOut))
-        
-    },
-
-    [checkIfUserIsOut]: function (state, { payload }) {
-        if (payload === false) {
-            const userOut = [2]
-            localStorage.setItem(CUR_USER_TOKE, JSON.stringify(userOut))
+            const userOut = []
+            state.userInAccount = false
+            localStorage.setItem(CUR_USER_TOKEN, JSON.stringify(userOut))
             state.userExist = false;
             state.userInAccount = true
 
 
-        }
+        
 
     },
 
