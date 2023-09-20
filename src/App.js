@@ -1,29 +1,33 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate} from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import LogInPage from './pages/LogIn/LogInPage';
-import UserPage from './pages/InfoPage/InfoPage';
+
 import RestorePassword from './pages/RestorePassword/RestorePassword';
 import Private from './Komponents/PrivateRoutes/Routes/PrivateRoute';
 
-import { CUR_USER_TOKEN } from './redux/store/usersReducer';
+import MainPage from './pages/MainPage/MainPage';
+import InfoPage from './pages/InfoPage/InfoPage';
 
 import './App.css';
 
 function App() {
-  const token = localStorage.getItem(CUR_USER_TOKEN);
-  const userInAccount = useSelector((state) => state.toolkit.userInAccount);
+  
+  const token = useSelector((state) => state.toolkit.curUserToken );
 
   return (
     <div className="App">
       <Routes>
-        <Route element={<Private />}>
-          <Route path='/' element={<UserPage />} />
+        <Route  element={<Private>
+          <InfoPage/>
+        </Private>}>
         </Route>
-        <Route path='/logInPage' element={token === '' || token === null || !userInAccount ? <LogInPage /> : <Navigate to='/' />} />
-        <Route path='/createAccount' element={token === '' || token === null || !userInAccount ? <CreateAccount /> : <Navigate to='/' />} />
-        <Route path='/restorePassword' element={token === '' || token === null || !userInAccount ? <RestorePassword /> : <Navigate to='/' />} />
+        <Route path='/maipage' element={<MainPage />} />
+        <Route path='/' element={token?<InfoPage />:<MainPage/>} />
+        <Route path='/logInPage' element={token?<Navigate to={'/'}/> :<LogInPage/>} />
+        <Route path='/createAccount' element={token?<Navigate to={'/'}/> :<CreateAccount /> } />
+        <Route path='/restorePassword' element={token?<Navigate to={'/'}/> :<RestorePassword />} />
       </Routes>
     </div>
   );
