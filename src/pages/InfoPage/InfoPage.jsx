@@ -13,6 +13,7 @@ const InfoPage = () => {
   const [userOut, setuserOut] = useState(true);
   const [userInPage, setUserInPage] = useState(true);
   const user = useSelector((state) => state.toolkit.user);
+  
 
   function setToDeffault() {
     setTimeout(() => {

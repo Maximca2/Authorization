@@ -49,10 +49,11 @@ export const userReducer = createReducer(defaultState, {
         const data = userInfoParsed.find(it => it?.nicName === payload?.nicName && it?.password === payload?.password);
         if (data) {
             
-            state.user = data
+            
             state.userExist = true
             const userToken = data?.token;
             localStorage.setItem(CUR_USER_TOKEN, JSON.stringify(userToken));
+            state.user = data
             state.curUserToken = true
             state.userInAccount = true
         }else{
