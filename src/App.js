@@ -17,9 +17,9 @@ function App() {
   const token = useSelector((state) => state.toolkit.curUserToken );
 
   return (
-    <div className="App">
+    <div className="app">
       <Routes>
-        <Route  element={<Private>
+        <Route element={<Private>
           <InfoPage/>
         </Private>}>
         </Route>
