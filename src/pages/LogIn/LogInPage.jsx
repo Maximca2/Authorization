@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 
-import Button from "../../Komponents/ButtonCollection/Button";
-import Tittle from "../../Komponents/TittleColection/Tittle";
+import Button from "../../Components/ButtonCollection/Button";
+import Tittle from "../../Components/TittleColection/Tittle";
+import Input from "../../Components/InputCollection/Input";
 
 import { checkUser } from "../../redux/store/usersReducer";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import style from "../LogIn/LogIn.module.scss";
+import style from "./logIn.module.scss";
+import {
+  ToastLogIn,
+} from "../../Components/ToastCollection/Toast";
 
-const showMessageError = () => {
-  toast.error("Такого акаунту немає!", {
-    position: toast.POSITION.TOP_RIGHT,
-  });
-};
+let condition = true;
 
 export function checkIfAccountIs(value) {
   if (!value) {
-    showMessageError();
+    condition = false;
   }
 }
 
@@ -28,57 +26,53 @@ const LogInPage = () => {
   const dispatch = useDispatch();
   const [dataToLogIn, setdataToLogIn] = useState({});
   const [wrongValue, setWrongValue] = useState(true);
-  const [redirectNow, setRedirectNow] = useState(false);
+  const [success, setSuccess] = useState(condition);
 
   const userExist = useSelector((state) => state.toolkit.userExist);
   const database = useSelector((state) => state.toolkit.database);
 
-  function showMessageSuccess() {
-    toast.success("Ви успішно пройшли ідентифікацію!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
-
   function checkIfAccountExist(obj) {
     if (obj.nicName || !obj.password) {
+      setTimeout(() => {
+        setWrongValue(true);
+      }, 6000);
       dispatch(checkUser(obj));
+      setSuccess(true);
     }
-
+    setSuccess(false);
     setWrongValue(false);
   }
 
   useEffect(() => {
+    setTimeout(() => {
+      if (!success) {
+        setSuccess(true);
+      }
+    }, 7000);
     if (userExist) {
       setWrongValue(true);
-      showMessageSuccess();
-      setTimeout(() => setRedirectNow(true), 2000);
+      setSuccess(true);
     }
-  }, [userExist]);
+  }, [userExist, success]);
 
   return (
     <div className={style.box}>
-      <Tittle style={style.LogIn} value={"Log in"} />
-      <ToastContainer />
+      {success ? null : <ToastLogIn condition={false} />}
+      <Tittle style={style.LogIn} value="Log in" />
       <div className={style.boxForInp}>
         <form className={style.form}>
-          <input
+          <Input
             type="input"
-            className={
-              !wrongValue ? style.inputIsNotCorrect : style.inputisCorrect
-            }
+            style={!wrongValue ? style.inputIsNotCorrect : null}
             placeholder="Нік нейм"
-            name="name"
-            id="nic-name"
+            id="nic name"
             onChange={(e) => {
               setdataToLogIn({ ...dataToLogIn, nicName: e.target.value });
             }}
           />
-          <input
+          <Input
             type="password"
-            autoComplete="section-blue shipping address-level2"
-            className={
-              !wrongValue ? style.inputIsNotCorrect : style.inputisCorrect
-            }
+            style={!wrongValue ? style.inputIsNotCorrect : null}
             placeholder="Пароль"
             id="password"
             onChange={(e) => {
@@ -95,16 +89,15 @@ const LogInPage = () => {
           Log in
         </button>
       </div>
-      {redirectNow ? <Navigate replace to={`/`} /> : null}
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
         <Button
-          color={style.restorePs}
+          style={style.restorePs}
           value={"Створити акаунт?"}
           to="/createAccount"
         />
         <Button
-          color={style.createAc}
+          style={style.createAc}
           value={"Забули пароль?"}
           to="/restorePassword"
         />

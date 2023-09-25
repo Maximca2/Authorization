@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Navigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 
 import { ifAccountExist } from "../../redux/store/usersReducer";
 import { createNewPassword } from "../../redux/store/usersReducer";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import style from "../RestorePassword/Restore.module.scss";
+import style from "./Restore.module.scss";
+import { ToastRestorePassword } from "../../Components/ToastCollection/Toast";
+import Input from "../../Components/InputCollection/Input";
 
 const RestorePassword = () => {
-  
   const dispatch = useDispatch();
   const [dataToGetPassword, setDataToGetPassword] = useState({});
   const [newPassword, setNewPassword] = useState({});
   const [exist, setExist] = useState(true);
   const [redirectNow, setRedirectNow] = useState(false);
+  const [success, setSuccess] = useState(null);
 
   const curUserAccountExist = useSelector(
     (state) => state.toolkit.curUserAccount
@@ -25,21 +26,10 @@ const RestorePassword = () => {
   const passwordCheck = useSelector((state) => state.toolkit.curUserName);
 
   const curUser = useSelector((state) => state.toolkit.curUser);
-  const checkIfUserHaveCuraccount = (curUserAccountObject) => {
+  const checkIfUserHaveCurrentAccount = (curUserAccountObject) => {
     dispatch(ifAccountExist(curUserAccountObject));
   };
 
-  const showMessageError = () => {
-    toast.error("Заповніть всі поля!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-
-  function showMessageSuccess() {
-    toast.success("Ви успішно поміняли пароль", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
   const getNewPassword = (newPassword, curUser) => {
     const objToCreateNewPassword = {
       curAccount: curUser,
@@ -49,30 +39,27 @@ const RestorePassword = () => {
 
     if (newPassword.newPassword) {
       dispatch(createNewPassword(objToCreateNewPassword));
-      showMessageSuccess();
+
+      setSuccess(true);
       setExist(false);
       setTimeout(() => {
         setRedirectNow(true);
       }, 2000);
     } else {
-      showMessageError();
+      setSuccess(false);
     }
   };
   useEffect(() => {
     setExist(true);
   }, [exist]);
 
-  function showButtontoRestorePassword(userExist) {
+  function showInputToRestorePassword(userExist) {
     if (userExist && dataToGetPassword.nicName === passwordCheck) {
       return (
         <div className={style.boxToChangePassword}>
-          <ToastContainer />
-          <input
-            className={style.inputNewPassword}
+          <Input
             type="input"
             placeholder="придумайте новий пароль"
-            name="name"
-            required
             onChange={(e) => {
               setNewPassword({
                 ...newPassword,
@@ -86,18 +73,23 @@ const RestorePassword = () => {
           >
             Поміняти пароль
           </button>
-          {redirectNow ? <Navigate replace to="/logInPage" /> : null}
+          {redirectNow ? <Navigate replace to="/logIn" /> : null}
         </div>
       );
     }
   }
   return (
     <div className={style.box}>
-      <ToastContainer />
-      <div className={style.messageRestorePassword}>Відновити пароль</div>     
+      {success ? (
+        <ToastRestorePassword
+          condition={true}
+          value="Ви успішно поміняли пароль!"
+        />
+      ) : null}
+      <div className={style.messageRestorePassword}>Відновити пароль</div>
       <input
         type="input"
-        className={style.inputNicName}
+        className={style.inputs}
         placeholder="Nic Name?"
         name="name"
         required
@@ -110,14 +102,14 @@ const RestorePassword = () => {
       />
       <button
         className={style.sendData}
-        onClick={() => checkIfUserHaveCuraccount(dataToGetPassword)}
+        onClick={() => checkIfUserHaveCurrentAccount(dataToGetPassword)}
       >
         Дальше
       </button>
-      <NavLink className={style.BackButton} to={"/logIn"}>
+      <NavLink className={style.BackButton} to="/logIn">
         Назад до Log in
       </NavLink>
-      {showButtontoRestorePassword(curUserAccountExist)}
+      {showInputToRestorePassword(curUserAccountExist)}
     </div>
   );
 };
