@@ -4,28 +4,13 @@
     background-color: rgb(180, 171, 240);
 }
 .btnHi{
-    text-decoration: none;
-    margin-top: 50px;
-    display: inline-block;
-    outline: 0;
-    cursor: pointer;
-    border: 2px solid #ff5b5b;
-    border-radius: 3px;
-    color: #fff;
-    background: #7078e6;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 28px;
-    padding: 32px 50px;
-    text-align: center;
-    transition-duration: 0.15s;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    :hover {
-      color: #000;
-      background: rgb(255, 218, 87);
-    }
-    
+  border: 2px solid #ff5b5b;
+  border-radius: 3px;
+  color: #fff;
+  background: #7078e6;
+  font-size: 20px;
+  padding: 32px 50px;
+
 }
 .messageHi{
   font-size: 25px;
