@@ -1,6 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD, CHECK_IF_USER_OUT, CHECK_IF_USER_IN,SET_LOG_IN } from './actions';
+import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD, CHECK_IF_USER_OUT, CHECK_IF_USER_IN, SET_LOG_IN } from './actions';
 import { checkIfAccountIs } from "../../pages/LogIn/LogInPage";
 const LOCAL_STORAGE_KEY = 'OUR_STORAGE_ITEMS';
 export const CUR_USER_TOKEN = 'CUR_USER_TOKEN';
@@ -37,7 +37,7 @@ export const userReducer = createReducer(defaultState, {
 
         if (!payload.nicName) {
 
-            return 
+            return
         }
         const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY)
         const userInfoParsed = JSON.parse(userInfo)
@@ -48,15 +48,17 @@ export const userReducer = createReducer(defaultState, {
         }
         const data = userInfoParsed.find(it => it?.nicName === payload?.nicName && it?.password === payload?.password);
         if (data) {
-            
-            
+
+
             state.userExist = true
             const userToken = data?.token;
+            state.curUserToken = true
+
             localStorage.setItem(CUR_USER_TOKEN, JSON.stringify(userToken));
             state.user = data
-            state.curUserToken = true
+
             state.userInAccount = true
-        }else{
+        } else {
             let ise = false;
             checkIfAccountIs(ise)
 
@@ -79,8 +81,8 @@ export const userReducer = createReducer(defaultState, {
 
         const userInfo = localStorage.getItem(LOCAL_STORAGE_KEY)
         const userInfoParsed = JSON.parse(userInfo)
-        if(!userInfoParsed){
-            return 
+        if (!userInfoParsed) {
+            return
         }
         const data = userInfoParsed.find(it => it.nicName === payload.nicName);
         if (!data) {
@@ -118,11 +120,11 @@ export const userReducer = createReducer(defaultState, {
     },
     [checkIfUserIsOut]: function (state) {
 
-            state.userInAccount = false
-            localStorage.removeItem(CUR_USER_TOKEN)
-            state.userExist = false;
-            state.userInAccount = false
-            state.curUserToken = false
+        state.userInAccount = false
+        localStorage.removeItem(CUR_USER_TOKEN)
+        state.userExist = false;
+        state.userInAccount = false
+        state.curUserToken = false
 
     },
 
