@@ -2,119 +2,106 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, Navigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
-import { isObject } from "./helper";
+import { checkAllValueInObject } from "../../helpers/helper";
+
+import { ToastCreateAccount } from "../../Components/ToastCollection/Toast";
 
 import { createAccountUser } from "../../redux/store/usersReducer";
-import Tittle from "../../Komponents/TittleColection/Tittle";
+
+import Tittle from "../../Components/TittleColection/Tittle";
+import Input from "../../Components/InputCollection/Input";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import style from "../CreateAccount/CreateAcc.module.scss";
+import style from "./createAccount.module.scss";
 
 const CreateAccount = () => {
   const dispatch = useDispatch();
   const [dataToLogIn, setdataToLogIn] = useState({});
   const [canLogIn, setCanLogIn] = useState(false);
   const [activeInp, setActiveInp] = useState(true);
-  const [counter, setCounter] = useState(0);
-
-  const showMessageError = () => {
-    toast.error("Заповніть всі поля!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-
-  function showMessageSuccess() {
-    toast.success("Ви успішно створили акаунт", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  }
+  const [success, setSuccess] = useState(false);
 
   const createAccount = (obj) => {
-    if (isObject(obj)) {
+    if (checkAllValueInObject(obj)) {
       const uniquToken = uuidv4();
       const objUniqueToken = {
         token: uniquToken,
         curAccountData: obj,
       };
+      setSuccess(true);
       setTimeout(() => {
         setCanLogIn(true);
       }, 2000);
       dispatch(createAccountUser(objUniqueToken));
-      setCounter((counter) => (counter += 1));
-      showMessageSuccess();
     } else {
       setActiveInp(false);
-      showMessageError();
     }
   };
 
   useEffect(() => {
     setTimeout(() => {
       setActiveInp(true);
-    }, 400);
+    }, 5000);
   }, [activeInp]);
 
   return (
     <div className={style.box}>
-      <ToastContainer />
-      <Tittle style={style.createAcc} value={"Create Account"} />
+      {!activeInp ? (
+        <ToastCreateAccount condition={false} value={"Заповніть поля!"} />
+      ) : null}
+      {success ? (
+        <ToastCreateAccount
+          condition={true}
+          value="Вітаю ви створили акаунт!"
+        />
+      ) : null}
+      <Tittle style={style.createAcc} value="Create Account" />
       <div className={style.inpBox}>
-        <input
+        <Input
           type="input"
-          className={!activeInp ? style.active : style.inputField}
+          style={!activeInp ? style.active : null}
           placeholder="Name"
-          name="name"
-          required
           onChange={(e) => {
             setdataToLogIn({ ...dataToLogIn, name: e.target.value });
           }}
         />
-        <input
+        <Input
           type="input"
-          className={!activeInp ? style.active : style.inputField}
-          placeholder="LasName"
-          id="last-name"
-          required
+          style={!activeInp ? style.active : null}
+          placeholder="LastName"
           onChange={(e) => {
             setdataToLogIn({ ...dataToLogIn, lastName: e.target.value });
           }}
         />
-        <input
+        <Input
           type="input"
-          className={!activeInp ? style.active : style.inputField}
-          placeholder="Нік нейм"
-          name="name"
-          id="nic-name"
-          required
+          style={!activeInp ? style.active : null}
+          placeholder="Nic Name"
           onChange={(e) => {
             setdataToLogIn({ ...dataToLogIn, nicName: e.target.value });
           }}
         />
-        <input
+        <Input
           type="password"
-          className={!activeInp ? style.active : style.inputField}
-          autoComplete=""
+          style={!activeInp ? style.active : null}
           placeholder="Password"
-          id="password"
-          required
           onChange={(e) => {
             setdataToLogIn({ ...dataToLogIn, password: e.target.value });
           }}
         />
       </div>
       <button
+        onClick={() => createAccount(dataToLogIn)}
         className={style.createAccountBtn}
-        onClick={counter === 0 ? () => createAccount(dataToLogIn) : null}
       >
         {canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "}
       </button>
-      {canLogIn ? <Navigate replace to="/logInPage" /> : null}
+      {canLogIn ? <Navigate replace to="/logIn" /> : null}
 
-      <NavLink className={style.LogInBtn} to={"/logInPage"}>
+      <NavLink className={style.LogInBtn} to="/logIn">
         Log in
       </NavLink>
     </div>
