@@ -87,9 +87,8 @@ const RestorePassword = () => {
         />
       ) : null}
       <div className={style.messageRestorePassword}>Відновити пароль</div>
-      <input
+      <Input
         type="input"
-        className={style.inputs}
         placeholder="Nic Name?"
         name="name"
         required
