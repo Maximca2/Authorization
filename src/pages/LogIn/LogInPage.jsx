@@ -84,11 +84,10 @@ const LogInPage = () => {
         </form>
       </div>
       <div className={style.boxForBtn}>
-        <Button
+        <button
           onClick={() => checkIfAccountExist(dataToLogIn, database)}
-          style={style.btnLogIn}
-          value={"Log in"}
-        ></Button>
+          className={style.btnLogIn}
+        >log in</button>
       </div>
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
