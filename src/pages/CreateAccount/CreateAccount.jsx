@@ -93,14 +93,12 @@ const CreateAccount = () => {
           }}
         />
       </div>
-      <Button
+      <button
+        className={style.createAccountBtn}
         onClick={() => createAccount(dataToLogIn)}
-        style={style.createAccountBtn}
-        value={
-          canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "
-        }
-      />
-
+      >
+        {canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "}
+      </button>
       {canLogIn ? <Navigate replace to="/logIn" /> : null}
 
       <Button className={style.LogInBtn} to="/logIn" value={"Log in"} />

@@ -5,7 +5,7 @@ import "./style.scss";
 function Button({ style, value, to }) {
   if (to) {
     return (
-      <button className={`button ${style}`}>
+      <button  className={`button ${style}`}>
         <NavLink className="text-none" to={to}>
           {value}
         </NavLink>
