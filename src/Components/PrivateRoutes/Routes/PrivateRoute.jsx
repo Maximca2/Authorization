@@ -1,9 +1,8 @@
-import MainPage from "../../../pages/MainPage/MainPage";
+import MainPage from "../../../pages/MainPage";
 
 import { CUR_USER_TOKEN } from "../../../redux/store/usersReducer";
 
 import { Navigate } from "react-router";
-
 
 const Private = () => {
 

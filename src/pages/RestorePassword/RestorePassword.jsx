@@ -5,11 +5,12 @@ import { NavLink, Navigate } from "react-router-dom";
 import { ifAccountExist } from "../../redux/store/usersReducer";
 import { createNewPassword } from "../../redux/store/usersReducer";
 
+import { ToastRestorePassword } from "../../Components/Toast";
+import Input from "../../Components/Input";
+
 import "react-toastify/dist/ReactToastify.css";
 
 import style from "./Restore.module.scss";
-import { ToastRestorePassword } from "../../Components/ToastCollection/Toast";
-import Input from "../../Components/InputCollection/Input";
 
 const RestorePassword = () => {
   const dispatch = useDispatch();

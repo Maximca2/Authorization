@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
-import CreateAccount from './pages/CreateAccount/CreateAccount';
-import LogInPage from './pages/LogIn/LogInPage';
+import CreateAccount from './pages/CreateAccount';
+import LogInPage from './pages/LogIn';
 
-import RestorePassword from './pages/RestorePassword/RestorePassword';
-import Private from './Components/PrivateRoutes/Routes/PrivateRoute';
+import RestorePassword from './pages/RestorePassword';
+import Private from './Components/PrivateRoutes';
 
-import MainPage from './pages/MainPage/MainPage';
-import InfoPage from './pages/InfoPage/InfoPage';
+import MainPage from './pages/MainPage';
+import InfoPage from './pages/InfoPage';
 
 import './App.css';
 

@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { checkAllValueInObject } from "../../helpers/helper";
 
-import { ToastCreateAccount } from "../../Components/ToastCollection/Toast";
+import { ToastCreateAccount } from "../../Components/Toast";
+import Tittle from "../../Components/Tittle";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
 
 import { createAccountUser } from "../../redux/store/usersReducer";
-
-import Tittle from "../../Components/TittleColection/Tittle";
-import Input from "../../Components/InputCollection/Input";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -93,17 +93,17 @@ const CreateAccount = () => {
           }}
         />
       </div>
-      <button
+      <Button
         onClick={() => createAccount(dataToLogIn)}
-        className={style.createAccountBtn}
-      >
-        {canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "}
-      </button>
+        style={style.createAccountBtn}
+        value={
+          canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "
+        }
+      />
+
       {canLogIn ? <Navigate replace to="/logIn" /> : null}
 
-      <NavLink className={style.LogInBtn} to="/logIn">
-        Log in
-      </NavLink>
+      <Button className={style.LogInBtn} to="/logIn" value={"Log in"} />
     </div>
   );
 };
