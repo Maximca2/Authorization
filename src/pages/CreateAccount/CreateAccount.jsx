@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import clsx from "clsx";
 
 import { checkAllValueInObject } from "../../helpers/helper";
 
@@ -19,16 +20,16 @@ import style from "./createAccount.module.scss";
 
 const CreateAccount = () => {
   const dispatch = useDispatch();
-  const [dataToLogIn, setdataToLogIn] = useState({});
+  const [dataToLogIn, setDataToLogIn] = useState({});
   const [canLogIn, setCanLogIn] = useState(false);
   const [activeInp, setActiveInp] = useState(true);
   const [success, setSuccess] = useState(false);
 
   const createAccount = (obj) => {
     if (checkAllValueInObject(obj)) {
-      const uniquToken = uuidv4();
+      const uniqueToken = uuidv4();
       const objUniqueToken = {
-        token: uniquToken,
+        token: uniqueToken,
         curAccountData: obj,
       };
       setSuccess(true);
@@ -62,34 +63,42 @@ const CreateAccount = () => {
       <div className={style.inpBox}>
         <Input
           type="input"
-          style={!activeInp ? style.active : null}
+          style={clsx({
+            [style.active]: !activeInp,
+          })}
           placeholder="Name"
           onChange={(e) => {
-            setdataToLogIn({ ...dataToLogIn, name: e.target.value });
+            setDataToLogIn({ ...dataToLogIn, name: e.target.value });
           }}
         />
         <Input
           type="input"
-          style={!activeInp ? style.active : null}
+          style={clsx({
+            [style.active]: !activeInp,
+          })}
           placeholder="LastName"
           onChange={(e) => {
-            setdataToLogIn({ ...dataToLogIn, lastName: e.target.value });
+            setDataToLogIn({ ...dataToLogIn, lastName: e.target.value });
           }}
         />
         <Input
           type="input"
-          style={!activeInp ? style.active : null}
+          style={clsx({
+            [style.active]: !activeInp,
+          })}
           placeholder="Nic Name"
           onChange={(e) => {
-            setdataToLogIn({ ...dataToLogIn, nicName: e.target.value });
+            setDataToLogIn({ ...dataToLogIn, nicName: e.target.value });
           }}
         />
         <Input
           type="password"
-          style={!activeInp ? style.active : null}
+          style={clsx({
+            [style.active]: !activeInp,
+          })}
           placeholder="Password"
           onChange={(e) => {
-            setdataToLogIn({ ...dataToLogIn, password: e.target.value });
+            setDataToLogIn({ ...dataToLogIn, password: e.target.value });
           }}
         />
       </div>
