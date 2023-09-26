@@ -5,9 +5,12 @@
 }
   
 .createAccountBtn {
+    padding: 20px 40px;
     border: 2px solid #000;
     color: #fff;
     background: #000;
+    margin-right: 30px;
+    cursor: pointer;
 }
 
 .active {
@@ -28,6 +31,7 @@
 
 .LogInBtn{
   border: 2px solid #87ff6e;
+  align-items: center;
   color: #fff;
   margin-left: 40px;
   background: #53335e;
