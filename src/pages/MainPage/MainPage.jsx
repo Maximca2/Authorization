@@ -1,7 +1,6 @@
 import React from "react";
 
-
-import Button from "../../Components/ButtonCollection/Button";
+import Button from "../../Components/Button";
 import style from "./mainPage.module.scss";
 
 const MainPage = () => (
