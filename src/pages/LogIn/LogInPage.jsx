@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import clsx from "clsx";
 
-import Button from "../../Components/ButtonCollection/Button";
-import Tittle from "../../Components/TittleColection/Tittle";
-import Input from "../../Components/InputCollection/Input";
+import Button from "../../Components/Button";
+import Tittle from "../../Components/Tittle";
+import Input from "../../Components/Input";
+import { ToastLogIn } from "../../Components/Toast";
 
 import { checkUser } from "../../redux/store/usersReducer";
 
-import "react-toastify/dist/ReactToastify.css";
-
 import style from "./logIn.module.scss";
-import {
-  ToastLogIn,
-} from "../../Components/ToastCollection/Toast";
+import "react-toastify/dist/ReactToastify.css";
 
 let condition = true;
 
@@ -24,7 +22,7 @@ export function checkIfAccountIs(value) {
 
 const LogInPage = () => {
   const dispatch = useDispatch();
-  const [dataToLogIn, setdataToLogIn] = useState({});
+  const [dataToLogIn, setDataToLogIn] = useState({});
   const [wrongValue, setWrongValue] = useState(true);
   const [success, setSuccess] = useState(condition);
 
@@ -63,31 +61,34 @@ const LogInPage = () => {
         <form className={style.form}>
           <Input
             type="input"
-            style={!wrongValue ? style.inputIsNotCorrect : null}
+            style={clsx({
+              [style.inputIsNotCorrect]: !wrongValue,
+            })}
             placeholder="Нік нейм"
-            id="nic name"
+            id="nickname"
             onChange={(e) => {
-              setdataToLogIn({ ...dataToLogIn, nicName: e.target.value });
+              setDataToLogIn({ ...dataToLogIn, nicName: e.target.value });
             }}
           />
           <Input
             type="password"
-            style={!wrongValue ? style.inputIsNotCorrect : null}
+            style={clsx({
+              [style.inputIsNotCorrect]: !wrongValue,
+            })}
             placeholder="Пароль"
             id="password"
             onChange={(e) => {
-              setdataToLogIn({ ...dataToLogIn, password: e.target.value });
+              setDataToLogIn({ ...dataToLogIn, password: e.target.value });
             }}
           />
         </form>
       </div>
       <div className={style.boxForBtn}>
-        <button
+        <Button
           onClick={() => checkIfAccountExist(dataToLogIn, database)}
-          className={style.btnLogIn}
-        >
-          Log in
-        </button>
+          style={style.btnLogIn}
+          value={"Log in"}
+        ></Button>
       </div>
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
