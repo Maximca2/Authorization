@@ -7,9 +7,9 @@ import Tittle from "../../Components/Tittle";
 import Input from "../../Components/Input";
 import { ToastLogIn } from "../../Components/Toast";
 
-import { checkUser } from "../../redux/store/usersReducer";
+import { checkUser ,checkIfCurrentNickNameExist} from "../../redux/store/usersReducer";
 
-import style from "./logIn.module.scss";
+import style from "./LogIn.module.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 let condition = true;
@@ -28,12 +28,15 @@ const LogInPage = () => {
 
   const userExist = useSelector((state) => state.toolkit.userExist);
   const database = useSelector((state) => state.toolkit.database);
+  function takeAccess(){
+    dispatch(checkIfCurrentNickNameExist())
+  }
 
   function checkIfAccountExist(obj) {
     if (obj.nicName || !obj.password) {
       setTimeout(() => {
         setWrongValue(true);
-      }, 6000);
+      }, 2000);
       dispatch(checkUser(obj));
       setSuccess(true);
     }
@@ -46,7 +49,7 @@ const LogInPage = () => {
       if (!success) {
         setSuccess(true);
       }
-    }, 7000);
+    }, 2000);
     if (userExist) {
       setWrongValue(true);
       setSuccess(true);
@@ -91,11 +94,9 @@ const LogInPage = () => {
       </div>
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
-        <Button
-          style={style.restorePs}
-          value={"Створити акаунт?"}
-          to="/createAccount"
-        />
+        <Button style={style.restorePs} takeAccess={()=>takeAccess()} to={"/createAccount"} value={'Створити акаунт'}>
+          Створити акаунт
+        </Button>
         <Button
           style={style.createAc}
           value={"Забули пароль?"}
