@@ -2,7 +2,9 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 
 import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD, CHECK_IF_USER_OUT, CHECK_IF_USER_IN, SET_LOG_IN } from './actions';
 import { checkIfAccountIs } from "../../pages/LogIn/LogInPage";
+import { checkIfCurrentAccountExist } from "../../pages/CreateAccount/CreateAccount";
 const LOCAL_STORAGE_KEY = 'OUR_STORAGE_ITEMS';
+const LOCALE_STORAGE_KEY_OF_NICKNAME = 'LOCALE_STORAGE_KEY_OF_NICKNAME'
 export const CUR_USER_TOKEN = 'CUR_USER_TOKEN';
 
 // DefaultState
@@ -16,7 +18,11 @@ const defaultState = {
     newPassword: false,
     userIsOut: false,
     curUserName: null,
-    userInAccount: false
+    userInAccount: false,
+    uniqueNickName: localStorage.getItem(LOCALE_STORAGE_KEY_OF_NICKNAME) ? JSON.parse(localStorage.getItem(LOCALE_STORAGE_KEY_OF_NICKNAME)) : [],
+    curUserNicNameExist:null,
+    canLogIn:false
+
 
 }
 
@@ -28,7 +34,7 @@ export const createNewPassword = createAction(CREATE_NEW_PASSWORD)
 export const checkIfUserIsOut = createAction(CHECK_IF_USER_OUT)
 export const checkIfUserIn = createAction(CHECK_IF_USER_IN)
 export const setLogIn = createAction(SET_LOG_IN)
-
+export const checkIfCurrentNickNameExist = createAction('check')
 //Reducer 
 export const userReducer = createReducer(defaultState, {
 
@@ -68,10 +74,29 @@ export const userReducer = createReducer(defaultState, {
     [createAccountUser]: function (state, { payload }) {
 
         const { curAccountData, token } = payload;
+        state.canLogIn =false
+
+        const curNicName = [...state.uniqueNickName, curAccountData.nicName];
+        state.curUserNicNameExist = false
+        if(state.uniqueNickName.includes(curAccountData.nicName)){
+            state.curUserNicNameExist = false
+            state.canLogIn = false
+            checkIfCurrentAccountExist(state.curUserNicNameExist);
+            return
+        }
+        state.curUserNicNameExist = true
+        state.canLogIn = true
+
+        checkIfCurrentAccountExist(state.curUserNicNameExist);
+
+        state.uniqueNickName.push(curAccountData.nicName);
+
+        localStorage.setItem(LOCALE_STORAGE_KEY_OF_NICKNAME, JSON.stringify(curNicName))
         curAccountData.token = token
         const newUser = [...state.database, curAccountData]
         state.database.push(curAccountData)
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newUser))
+        
 
     },
     [ifAccountExist]: function (state, { payload }) {
@@ -125,6 +150,11 @@ export const userReducer = createReducer(defaultState, {
         state.userExist = false;
         state.userInAccount = false
         state.curUserToken = false
+
+    },
+    [checkIfCurrentNickNameExist]: function (state) {
+        console.log('фсс')
+        state.canLogIn = false
 
     },
 
