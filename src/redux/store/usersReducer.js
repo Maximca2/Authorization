@@ -153,7 +153,7 @@ export const userReducer = createReducer(defaultState, {
 
     },
     [checkIfCurrentNickNameExist]: function (state) {
-        console.log('фсс')
+       
         state.canLogIn = false
 
     },
