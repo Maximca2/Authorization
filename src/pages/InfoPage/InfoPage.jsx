@@ -5,7 +5,7 @@ import { checkIfUserIsOut } from "../../redux/store/usersReducer";
 
 import { CUR_USER_TOKEN } from "../../redux/store/usersReducer";
 
-import style from "./infoPage.module.scss";
+import style from "./InfoPage.module.scss";
 
 const InfoPage = () => {
   const dispatch = useDispatch();
