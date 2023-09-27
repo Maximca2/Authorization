@@ -1,7 +1,7 @@
 import React from "react";
 
 import Button from "../../Components/Button";
-import style from "./mainPage.module.scss";
+import style from "./MainPage.module.scss";
 
 const MainPage = () => (
   <div className={style.boxFor}>
