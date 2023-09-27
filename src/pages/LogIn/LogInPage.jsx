@@ -12,19 +12,12 @@ import { checkUser ,checkIfCurrentNickNameExist} from "../../redux/store/usersRe
 import style from "./LogIn.module.scss";
 import "react-toastify/dist/ReactToastify.css";
 
-let condition = true;
-
-export function checkIfAccountIs(value) {
-  if (!value) {
-    condition = false;
-  }
-}
 
 const LogInPage = () => {
   const dispatch = useDispatch();
   const [dataToLogIn, setDataToLogIn] = useState({});
   const [wrongValue, setWrongValue] = useState(true);
-  const [success, setSuccess] = useState(condition);
+  const [success, setSuccess] = useState(true);
 
   const userExist = useSelector((state) => state.toolkit.userExist);
   const database = useSelector((state) => state.toolkit.database);

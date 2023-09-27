@@ -1,7 +1,7 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
 import { CHECK_USER, CREATE_ACCOUNT, RESTORE_PASSWORD, CREATE_NEW_PASSWORD, CHECK_IF_USER_OUT, CHECK_IF_USER_IN, SET_LOG_IN } from './actions';
-import { checkIfAccountIs } from "../../pages/LogIn/LogInPage";
+// import { checkIfAccountIs } from "../../pages/LogIn/LogInPage";
 import { checkIfCurrentAccountExist } from "../../pages/CreateAccount/CreateAccount";
 const LOCAL_STORAGE_KEY = 'OUR_STORAGE_ITEMS';
 const LOCALE_STORAGE_KEY_OF_NICKNAME = 'LOCALE_STORAGE_KEY_OF_NICKNAME'
@@ -65,8 +65,7 @@ export const userReducer = createReducer(defaultState, {
 
             state.userInAccount = true
         } else {
-            let ise = false;
-            checkIfAccountIs(ise)
+            
 
             state.userExist = false
         }
