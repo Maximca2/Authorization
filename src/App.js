@@ -15,6 +15,7 @@ import './App.css';
 function App() {
 
   const token = useSelector((state) => state.toolkit.curUserToken);
+ 
 
   return (
     <div className="app">
@@ -24,6 +25,7 @@ function App() {
         </Private>}>
         </Route>
         <Route path='/' element={token ? <InfoPage /> : <MainPage />} />
+        <Route path='*' element={token ? <InfoPage /> : <MainPage />} />
         <Route path="/logIn" element={token ? <Navigate to='/' /> : <LogInPage />} />
         <Route path='/createAccount' element={token ? <Navigate to='/' /> : <CreateAccount />} />
         <Route path='/restorePassword' element={token ? <Navigate to='/' /> : <RestorePassword />} />
