@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import clsx from "clsx";
+import { ToastContainer } from "react-toastify";
 
+import {
+  setError,
+  setSuccess,
+} from "../../helpers/helperToCheckIfAccountExist";
 import { checkAllValueInObject } from "../../helpers/helper";
 
 import { ToastCreateAccount } from "../../Components/Toast";
@@ -16,14 +21,24 @@ import { createAccountUser } from "../../redux/store/usersReducer";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import style from "./createAccount.module.scss";
+import style from "./CreateAccount.module.scss";
+
+export function checkIfCurrentAccountExist(value) {
+  if (!value) {
+    return setError();
+  }
+  setTimeout(() => {
+    return setSuccess();
+  }, 500);
+}
 
 const CreateAccount = () => {
   const dispatch = useDispatch();
   const [dataToLogIn, setDataToLogIn] = useState({});
-  const [canLogIn, setCanLogIn] = useState(false);
   const [activeInp, setActiveInp] = useState(true);
-  const [success, setSuccess] = useState(false);
+  const [navigate, setNavigate] = useState(false);
+
+  const canLogIn = useSelector((state) => state.toolkit.canLogIn);
 
   const createAccount = (obj) => {
     if (checkAllValueInObject(obj)) {
@@ -32,10 +47,6 @@ const CreateAccount = () => {
         token: uniqueToken,
         curAccountData: obj,
       };
-      setSuccess(true);
-      setTimeout(() => {
-        setCanLogIn(true);
-      }, 2000);
       dispatch(createAccountUser(objUniqueToken));
     } else {
       setActiveInp(false);
@@ -43,21 +54,21 @@ const CreateAccount = () => {
   };
 
   useEffect(() => {
+    if (canLogIn) {
+      setTimeout(() => {
+        setNavigate(true);
+      }, 2000);
+    }
     setTimeout(() => {
       setActiveInp(true);
-    }, 5000);
-  }, [activeInp]);
+    }, 2000);
+  }, [activeInp, canLogIn]);
 
   return (
     <div className={style.box}>
+      <ToastContainer />
       {!activeInp ? (
         <ToastCreateAccount condition={false} value={"Заповніть поля!"} />
-      ) : null}
-      {success ? (
-        <ToastCreateAccount
-          condition={true}
-          value="Вітаю ви створили акаунт!"
-        />
       ) : null}
       <Tittle style={style.createAcc} value="Create Account" />
       <div className={style.inpBox}>
@@ -106,11 +117,10 @@ const CreateAccount = () => {
         className={style.createAccountBtn}
         onClick={() => createAccount(dataToLogIn)}
       >
-        {canLogIn ? "акаунт створено перейти до логіну" : "Зареєструвати "}
+        Зареєструвати
       </button>
-      {canLogIn ? <Navigate replace to="/logIn" /> : null}
-
-      <Button className={style.LogInBtn} to="/logIn" value={"Log in"} />
+      {navigate ? <Navigate to="/logIn" /> : null}
+      <Button style={style.LogInBtn} to="/logIn" value={"Log in"} />
     </div>
   );
 };
