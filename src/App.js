@@ -3,12 +3,11 @@ import { useSelector } from "react-redux";
 
 import CreateAccount from './pages/CreateAccount';
 import LogInPage from './pages/LogIn';
-
 import RestorePassword from './pages/RestorePassword';
-import Private from './Components/PrivateRoutes';
-
-import MainPage from './pages/MainPage';
 import InfoPage from './pages/InfoPage';
+import MainPage from './pages/MainPage';
+
+import Private from './Components/PrivateRoutes';
 
 import './App.css';
 
