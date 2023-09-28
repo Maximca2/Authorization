@@ -10,7 +10,7 @@ import { successToRestorePassword } from "../../messages";
 //Components
 import Input from "../../Components/Input";
 //helper 
-import { toastSuccessPasswordRestored } from "../../helpers/helperToasts";
+import { toastSuccessPasswordRestored } from "../../helpers";
 //style
 import "react-toastify/dist/ReactToastify.css";
 

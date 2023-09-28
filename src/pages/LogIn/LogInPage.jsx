@@ -11,7 +11,7 @@ import { checkUser ,checkIfCurrentNickNameExist} from "../../redux/store/usersRe
 //message
 import { accountIsntExistOrInputValueIsEmpty } from "../../messages";
 //helpers
-import { toastInputIsEmpty } from "../../helpers/helperToasts";
+import { toastInputIsEmpty } from "../../helpers";
 
 //style
 import style from "./style.module.scss";

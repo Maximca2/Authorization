@@ -10,7 +10,7 @@ import {
   toastError,
   toastSuccess,
   toastInputIsEmpty,
-} from "../../helpers/helperToasts";
+} from "../../helpers";
 import { checkAllValueInObject } from "../../helpers/helper";
 //Components
 import Tittle from "../../Components/Tittle";
