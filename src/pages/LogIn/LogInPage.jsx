@@ -1,64 +1,58 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import clsx from "clsx";
-
+//Components
 import Button from "../../Components/Button";
 import Tittle from "../../Components/Tittle";
 import Input from "../../Components/Input";
-import { ToastLogIn } from "../../Components/Toast";
-
+//Reducer
 import { checkUser ,checkIfCurrentNickNameExist} from "../../redux/store/usersReducer";
+//message
+import { accountIsntExistOrInputValueIsEmpty } from "../../messages";
+//helpers
+import { toastInputIsEmpty } from "../../helpers/helperToasts";
 
-import style from "./LogIn.module.scss";
+//style
+import style from "./style.module.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 
 const LogInPage = () => {
   const dispatch = useDispatch();
   const [dataToLogIn, setDataToLogIn] = useState({});
-  const [wrongValue, setWrongValue] = useState(true);
-  const [success, setSuccess] = useState(true);
-
+  const [inputIsEmpty, setInputIsEmpty] = useState(true);
+ 
   const userExist = useSelector((state) => state.toolkit.userExist);
   const database = useSelector((state) => state.toolkit.database);
-  function takeAccess(){
-    dispatch(checkIfCurrentNickNameExist())
-  }
 
   function checkIfAccountExist(obj) {
     if (obj.nicName || !obj.password) {
       setTimeout(() => {
-        setWrongValue(true);
+        setInputIsEmpty(true);
       }, 2000);
       dispatch(checkUser(obj));
-      setSuccess(true);
     }
-    setSuccess(false);
-    setWrongValue(false);
+    toastInputIsEmpty(accountIsntExistOrInputValueIsEmpty)
+    setInputIsEmpty(false);
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      if (!success) {
-        setSuccess(true);
-      }
-    }, 2000);
     if (userExist) {
-      setWrongValue(true);
-      setSuccess(true);
+      setInputIsEmpty(true);
     }
-  }, [userExist, success]);
+  }, [userExist]);
 
   return (
     <div className={style.box}>
-      {success ? null : <ToastLogIn condition={false} />}
-      <Tittle style={style.LogIn} value="Log in" />
+      <ToastContainer limit={1} />
+      <Tittle style={style.logIn} value="Log in" />
       <div className={style.boxForInp}>
         <form className={style.form}>
           <Input
             type="input"
             style={clsx({
-              [style.inputIsNotCorrect]: !wrongValue,
+              [style.isNotValue]: !inputIsEmpty,
             })}
             placeholder="Нік нейм"
             id="nickname"
@@ -69,7 +63,7 @@ const LogInPage = () => {
           <Input
             type="password"
             style={clsx({
-              [style.inputIsNotCorrect]: !wrongValue,
+              [style.isNotValue]: !inputIsEmpty,
             })}
             placeholder="Пароль"
             id="password"
@@ -80,19 +74,20 @@ const LogInPage = () => {
         </form>
       </div>
       <div className={style.boxForBtn}>
-        <button
+        <Button
           onClick={() => checkIfAccountExist(dataToLogIn, database)}
-          className={style.btnLogIn}
-        >log in</button>
+          style={style.btnLogIn}
+          value='Log in'
+        >log in</Button>
       </div>
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
-        <Button style={style.restorePs} takeAccess={()=>takeAccess()} to={"/createAccount"} value={'Створити акаунт'}>
+        <Button style={style.restorePassword} onClick={()=>dispatch(checkIfCurrentNickNameExist())} to="/createAccount" value={'Створити акаунт'}>
           Створити акаунт
         </Button>
         <Button
           style={style.createAc}
-          value={"Забули пароль?"}
+          value="Забули пароль?"
           to="/restorePassword"
         />
       </div>

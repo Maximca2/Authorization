@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Navigate } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
+//Reducer
 import { ifAccountExist } from "../../redux/store/usersReducer";
 import { createNewPassword } from "../../redux/store/usersReducer";
-
-import { ToastRestorePassword } from "../../Components/Toast";
+//message
+import { successToRestorePassword } from "../../messages";
+//Components
 import Input from "../../Components/Input";
-
+//helper 
+import { toastSuccessPasswordRestored } from "../../helpers/helperToasts";
+//style
 import "react-toastify/dist/ReactToastify.css";
 
-import style from "./Restore.module.scss";
+import style from "./style.module.scss";
 
 const RestorePassword = () => {
   const dispatch = useDispatch();
@@ -18,7 +22,6 @@ const RestorePassword = () => {
   const [newPassword, setNewPassword] = useState({});
   const [exist, setExist] = useState(true);
   const [redirectNow, setRedirectNow] = useState(false);
-  const [success, setSuccess] = useState(null);
 
   const curUserAccountExist = useSelector(
     (state) => state.toolkit.curUserAccount
@@ -32,22 +35,19 @@ const RestorePassword = () => {
   };
 
   const getNewPassword = (newPassword, curUser) => {
-    const objToCreateNewPassword = {
+    const passwordData = {
       curAccount: curUser,
       password: newPassword,
     };
     setExist(true);
 
     if (newPassword.newPassword) {
-      dispatch(createNewPassword(objToCreateNewPassword));
-
-      setSuccess(true);
+      dispatch(createNewPassword(passwordData));
+      toastSuccessPasswordRestored(successToRestorePassword)
       setExist(false);
       setTimeout(() => {
         setRedirectNow(true);
       }, 2000);
-    } else {
-      setSuccess(false);
     }
   };
   useEffect(() => {
@@ -78,15 +78,11 @@ const RestorePassword = () => {
         </div>
       );
     }
+    return null;
   }
   return (
     <div className={style.box}>
-      {success ? (
-        <ToastRestorePassword
-          condition={true}
-          value="Ви успішно поміняли пароль!"
-        />
-      ) : null}
+      <ToastContainer limit={1}/>
       <div className={style.messageRestorePassword}>Відновити пароль</div>
       <Input
         type="input"
