@@ -38,10 +38,10 @@ const LogInPage = () => {
         setInputIsEmpty(true);
       }, 2000);
       dispatch(checkUser(obj));
-    } else {
+    } 
       toastInputIsEmpty(accountIsntExistOrInputValueIsEmpty);
       setInputIsEmpty(false);
-    }
+ 
   }
 
   useEffect(() => {
