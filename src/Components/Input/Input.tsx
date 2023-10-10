@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-// import colections texfield props from react 
 import './style.scss';
 
 interface InputProps{
