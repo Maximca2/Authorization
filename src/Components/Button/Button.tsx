@@ -8,7 +8,7 @@ type ButtonProps = {
   styles: string,
   value: string,
   to:string,
-  onClick:any,
+  onClick: (params: any) => any,
 }
 
 
