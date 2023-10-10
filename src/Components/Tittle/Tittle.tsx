@@ -4,8 +4,8 @@ import React from "react";
 interface TittleProps{
   value:string,
   styles:string,
-  wrapperProps:object,
-  tittleProps:object,
+  wrapperProps:React.HTMLAttributes<HTMLElement>,
+  tittleProps:React.HTMLAttributes<HTMLElement>,
 }
 
 const Tittle = ({ value, styles ,wrapperProps = {},tittleProps={}}:TittleProps) => (
