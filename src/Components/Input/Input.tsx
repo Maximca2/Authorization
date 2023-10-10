@@ -4,10 +4,10 @@ import clsx from 'clsx';
 import './style.scss';
 
 interface InputProps{
-    type:string
-    styles:string,
-    placeholder:string,
-    id:string,
+    type?:string
+    styles?:string,
+    placeholder?:string,
+    id?:string,
     onChange:(e:React.ChangeEvent<HTMLInputElement>)=>void
     
   }
