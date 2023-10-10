@@ -28,7 +28,7 @@ export interface MyState {
   userIsOut: boolean;
   curUserName: string;
   userInAccount: boolean;
-  uniqueNickName: [string];
+  uniqueNickName: string[];
   curUserNicNameExist: boolean;
   canLogIn: boolean;
 //   curUserTokens: string;
