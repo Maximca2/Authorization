@@ -15,14 +15,17 @@ import { toastSuccessPasswordRestored } from "../../helpers";
 import "react-toastify/dist/ReactToastify.css";
 //hooks
 import {useAppDispatch,AppSelector} from '../../hooks/hooks'
+///options
+import { options } from "../../options/options";
 //style
 import  style from "./style.module.scss";
+
 
 const RestorePassword = () => {
   const dispatch = useAppDispatch();
 
-  const [dataToGetPassword, setDataToGetPassword] = useState<DataToGetPassword|any>({});
-  const [newPassword, setNewPassword] = useState<NewPassword|any>({});
+  const [dataToGetPassword, setDataToGetPassword] = useState<DataToGetPassword>({nicName:''});
+  const [newPassword, setNewPassword] = useState<NewPassword>({newPassword:''});
   const [exist, setExist] = useState<boolean>(true);
   const [redirectNow, setRedirectNow] = useState<boolean>(false);
 
@@ -46,7 +49,7 @@ const RestorePassword = () => {
 
     if (newPassword.newPassword) {
       dispatch(createNewPassword(passwordData));
-      toastSuccessPasswordRestored(successToRestorePassword)
+      toastSuccessPasswordRestored(successToRestorePassword,options)
       setExist(false);
       setTimeout(() => {
         setRedirectNow(true);

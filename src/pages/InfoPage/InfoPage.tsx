@@ -11,7 +11,7 @@ import { AppSelector } from "../../hooks/hooks";
 
 const InfoPage = () => {
   const dispatch = useDispatch();
-  const [userInPage, setUserInPage] = useState(false);
+  const [userInPage, setUserInPage] = useState<boolean>(false);
   const user = AppSelector((state) => state.toolkit.user);
 
   function setToDefault() {

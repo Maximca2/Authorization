@@ -7,7 +7,7 @@ const MainPage = () => (
   <div className={style.boxFor}>
     <div className={style.boxBtnHi}>
       <div className={style.message}>Вітаю!</div>
-      <Button styles={style.greetingBtn} value={"Увійти"} to="/logIn" onClick={undefined} />
+      <Button styles={style.greetingBtn} value={"Увійти"} to="/logIn" onClick={(params:any)=>params} />
     </div>
   </div>
 );
