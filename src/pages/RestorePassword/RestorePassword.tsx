@@ -2,30 +2,42 @@ import React, { useEffect, useState } from "react";
 import { NavLink, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 //Reducer
-import { createNewPassword, ifAccountExist } from "../../redux/store/usersReducer";
+import {
+  createNewPassword,
+  ifAccountExist,
+} from "../../redux/store/usersReducer";
 //message
 import { successToRestorePassword } from "../../messages";
 //interface
-import { CreateNewPassword, CurAccountData, DataToGetPassword, IfAccountExist, NewPassword} from "../../interface/interface";
+import {
+  CreateNewPassword,
+  CurAccountData,
+  DataToGetPassword,
+  IfAccountExist,
+  NewPassword,
+} from "../../interface/interface";
 //Components
 import Input from "../../Components/Input";
-//helper 
+//helper
 import { toastSuccessPasswordRestored } from "../../helpers";
 //style
 import "react-toastify/dist/ReactToastify.css";
 //hooks
-import {useAppDispatch,AppSelector} from '../../hooks/hooks'
+import { useAppDispatch, AppSelector } from "../../hooks/hooks";
 ///options
-import { options } from "../../options/options";
+import { options } from "../../options/optionsToast";
 //style
-import  style from "./style.module.scss";
-
+import style from "./style.module.scss";
 
 const RestorePassword = () => {
   const dispatch = useAppDispatch();
 
-  const [dataToGetPassword, setDataToGetPassword] = useState<DataToGetPassword>({nicName:''});
-  const [newPassword, setNewPassword] = useState<NewPassword>({newPassword:''});
+  const [dataToGetPassword, setDataToGetPassword] = useState<DataToGetPassword>(
+    { nicName: "" }
+  );
+  const [newPassword, setNewPassword] = useState<NewPassword>({
+    newPassword: "",
+  });
   const [exist, setExist] = useState<boolean>(true);
   const [redirectNow, setRedirectNow] = useState<boolean>(false);
 
@@ -35,21 +47,25 @@ const RestorePassword = () => {
   const passwordCheck = AppSelector((state) => state.toolkit.curUserName);
   const curUser = AppSelector((state) => state.toolkit.curUser);
 
-  const checkIfUserHaveCurrentAccount = (curUserAccountObject:IfAccountExist) => {
+  const checkIfUserHaveCurrentAccount = (
+    curUserAccountObject: IfAccountExist
+  ) => {
     dispatch(ifAccountExist(curUserAccountObject));
   };
 
-  const getNewPassword = (newPassword:NewPassword, curUser:CurAccountData) => {
-  
-    const passwordData:CreateNewPassword = {
+  const getNewPassword = (
+    newPassword: NewPassword,
+    curUser: CurAccountData
+  ) => {
+    const passwordData: CreateNewPassword = {
       password: newPassword,
-      curAccount: curUser
+      curAccount: curUser,
     };
     setExist(true);
 
     if (newPassword.newPassword) {
       dispatch(createNewPassword(passwordData));
-      toastSuccessPasswordRestored(successToRestorePassword,options)
+      toastSuccessPasswordRestored(successToRestorePassword, options);
       setExist(false);
       setTimeout(() => {
         setRedirectNow(true);
@@ -60,19 +76,22 @@ const RestorePassword = () => {
     setExist(true);
   }, [exist]);
 
-  function showInputToRestorePassword(userExist:boolean) {
+  function showInputToRestorePassword(userExist: boolean) {
     if (userExist && dataToGetPassword.nicName === passwordCheck) {
       return (
         <div className={style.boxToChangePassword}>
           <Input
             type="input"
             placeholder="придумайте новий пароль"
-            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setNewPassword({
                 ...newPassword,
                 newPassword: e.target.value,
               });
-            } } styles={""} id={""}          />
+            }}
+            styles={""}
+            id={""}
+          />
           <button
             className={style.changePasswordBtn}
             onClick={() => getNewPassword(newPassword, curUser)}
@@ -87,17 +106,20 @@ const RestorePassword = () => {
   }
   return (
     <div className={style.box}>
-      <ToastContainer limit={1}/>
+      <ToastContainer limit={1} />
       <div className={style.messageRestorePassword}>Відновити пароль</div>
       <Input
         type="input"
         placeholder="Nic Name?"
-        onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setDataToGetPassword({
             ...dataToGetPassword,
             nicName: e.target.value,
           });
-        } } styles={""}  id={""}      />
+        }}
+        styles={""}
+        id={""}
+      />
       <button
         className={style.sendData}
         onClick={() => checkIfUserHaveCurrentAccount(dataToGetPassword)}

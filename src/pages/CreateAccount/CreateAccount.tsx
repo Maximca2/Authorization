@@ -22,7 +22,7 @@ import { AppSelector } from "../../hooks/hooks";
 import { successCreateAccount, accountAlreadyExist } from "../../messages";
 import { fillInputs } from "../../messages";
 //options
-import { options } from "../../options/options";
+import { options } from "../../options/optionsToast";
 //style
 import "react-toastify/dist/ReactToastify.css";
 import style from "./style.module.scss";

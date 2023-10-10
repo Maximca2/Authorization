@@ -20,7 +20,7 @@ import { accountIsntExistOrInputValueIsEmpty } from "../../messages";
 //helpers
 import { toastInputIsEmpty } from "../../helpers";
 //options
-import { options } from "../../options/options";
+import { options } from "../../options/optionsToast";
 
 //style
 import style from "./style.module.scss";
@@ -29,7 +29,10 @@ import "react-toastify/dist/ReactToastify.css";
 const LogInPage = () => {
   const dispatch = useDispatch();
 
-  const [dataToLogIn, setDataToLogIn] = useState<UserData>({nicName:'',password:''});
+  const [dataToLogIn, setDataToLogIn] = useState<UserData>({
+    nicName: "",
+    password: "",
+  });
   const [inputIsEmpty, setInputIsEmpty] = useState<boolean>(true);
 
   const userExist = AppSelector((state) => state.toolkit.userExist);
@@ -40,10 +43,9 @@ const LogInPage = () => {
         setInputIsEmpty(true);
       }, 2000);
       dispatch(checkUser(obj));
-    } 
-      toastInputIsEmpty(accountIsntExistOrInputValueIsEmpty,options);
-      setInputIsEmpty(false);
- 
+    }
+    toastInputIsEmpty(accountIsntExistOrInputValueIsEmpty, options);
+    setInputIsEmpty(false);
   }
 
   useEffect(() => {
