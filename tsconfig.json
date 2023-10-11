@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    // "noImplicitAny": true,
+    "jsx": "preserve",
+    "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "es6",
+    "declaration": false,
+    "strict": true,
+    "strictNullChecks": false,
+    // "target": "ES2019",
+    // "module": "commonjs",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
+    // "outDir": "dist",
+    "esModuleInterop": true,
+    // "inlineSourceMap": true,
+    "rootDir": "./src",        //  this line changed
+    "baseUrl": "./src",        //  this line changed
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "paths": {
+      "@/*": [
+        "*"                    //  this line changed
+      ]
+    }
+  },
+  "include": [
+    // "./src/**/*.ts",uid dosnt work
+    "src/**/*.ts",
+    "src/**/*.js",
+    "src/**/*.json"            //  remove line related to tests
+, "src/redux/store/usersReducer.ts"  ],
+}

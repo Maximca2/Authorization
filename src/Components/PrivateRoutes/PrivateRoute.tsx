@@ -1,8 +1,10 @@
+import React from "react";
 import MainPage from "../../pages/MainPage";
 
 import { CUR_USER_TOKEN } from "../../redux/store/usersReducer";
 
 import { Navigate } from "react-router";
+
 
 const Private = () => {
   const token = localStorage.getItem(CUR_USER_TOKEN);
@@ -11,3 +13,5 @@ const Private = () => {
 };
 
 export default Private;
+
+

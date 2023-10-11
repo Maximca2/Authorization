@@ -1,39 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import clsx from "clsx";
 //Components
 import Button from "../../Components/Button";
 import Tittle from "../../Components/Tittle";
 import Input from "../../Components/Input";
+//hooks
+import { AppSelector } from "../../hooks/hooks";
+//interface
+import { UserData } from "@/interface/interface";
 //Reducer
-import { checkUser ,checkIfCurrentNickNameExist} from "../../redux/store/usersReducer";
+import {
+  checkUser,
+  checkIfCurrentNickNameExist,
+} from "../../redux/store/usersReducer";
 //message
 import { accountIsntExistOrInputValueIsEmpty } from "../../messages";
 //helpers
 import { toastInputIsEmpty } from "../../helpers";
+//options
+import { options } from "../../options/optionsToast";
 
 //style
 import style from "./style.module.scss";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const LogInPage = () => {
   const dispatch = useDispatch();
-  const [dataToLogIn, setDataToLogIn] = useState({});
-  const [inputIsEmpty, setInputIsEmpty] = useState(true);
- 
-  const userExist = useSelector((state) => state.toolkit.userExist);
-  const database = useSelector((state) => state.toolkit.database);
 
-  function checkIfAccountExist(obj) {
+  const [dataToLogIn, setDataToLogIn] = useState<UserData>({
+    nicName: "",
+    password: "",
+  });
+  const [inputIsEmpty, setInputIsEmpty] = useState<boolean>(true);
+
+  const userExist = AppSelector((state) => state.toolkit.userExist);
+
+  function checkIfAccountExist(obj: UserData): void {
     if (obj.nicName || !obj.password) {
       setTimeout(() => {
         setInputIsEmpty(true);
       }, 2000);
       dispatch(checkUser(obj));
     }
-    toastInputIsEmpty(accountIsntExistOrInputValueIsEmpty)
+    toastInputIsEmpty(accountIsntExistOrInputValueIsEmpty, options);
     setInputIsEmpty(false);
   }
 
@@ -46,28 +57,33 @@ const LogInPage = () => {
   return (
     <div className={style.box}>
       <ToastContainer limit={1} />
-      <Tittle style={style.logIn} value="Log in" />
+      <Tittle
+        tittleProps={null}
+        wrapperProps={null}
+        styles={style.logIn}
+        value="Log in"
+      />
       <div className={style.boxForInp}>
         <form className={style.form}>
           <Input
             type="input"
-            style={clsx({
+            styles={clsx({
               [style.isNotValue]: !inputIsEmpty,
             })}
             placeholder="Нік нейм"
             id="nickname"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setDataToLogIn({ ...dataToLogIn, nicName: e.target.value });
             }}
           />
           <Input
             type="password"
-            style={clsx({
+            styles={clsx({
               [style.isNotValue]: !inputIsEmpty,
             })}
             placeholder="Пароль"
             id="password"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setDataToLogIn({ ...dataToLogIn, password: e.target.value });
             }}
           />
@@ -75,20 +91,25 @@ const LogInPage = () => {
       </div>
       <div className={style.boxForBtn}>
         <Button
-          onClick={() => checkIfAccountExist(dataToLogIn, database)}
-          style={style.btnLogIn}
-          value='Log in'
-        >log in</Button>
+          to={undefined}
+          onClick={() => checkIfAccountExist(dataToLogIn)}
+          styles={style.btnLogIn}
+          value="Log in"
+        ></Button>
       </div>
       <div className={style.haventAccount}>немаєте акаунту?</div>
       <div className={style.boxForButtons}>
-        <Button style={style.restorePassword} onClick={()=>dispatch(checkIfCurrentNickNameExist())} to="/createAccount" value={'Створити акаунт'}>
-          Створити акаунт
-        </Button>
         <Button
-          style={style.createAc}
+          styles={style.restorePassword}
+          onClick={() => dispatch(checkIfCurrentNickNameExist())}
+          to="/createAccount"
+          value={"Створити акаунт"}
+        ></Button>
+        <Button
+          styles={style.createAc}
           value="Забули пароль?"
           to="/restorePassword"
+          onClick={undefined}
         />
       </div>
     </div>
