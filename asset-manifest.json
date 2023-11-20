@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/Authorization/build/static/css/main.a68d795c.css",
-    "main.js": "/Authorization/build/static/js/main.feb47ccb.js",
-    "index.html": "/Authorization/build/index.html",
-    "main.a68d795c.css.map": "/Authorization/build/static/css/main.a68d795c.css.map",
-    "main.feb47ccb.js.map": "/Authorization/build/static/js/main.feb47ccb.js.map"
+    "main.css": "/Authorization/static/css/main.a68d795c.css",
+    "main.js": "/Authorization/static/js/main.feb47ccb.js",
+    "index.html": "/Authorization/index.html",
+    "main.a68d795c.css.map": "/Authorization/static/css/main.a68d795c.css.map",
+    "main.feb47ccb.js.map": "/Authorization/static/js/main.feb47ccb.js.map"
   },
   "entrypoints": [
     "static/css/main.a68d795c.css",
